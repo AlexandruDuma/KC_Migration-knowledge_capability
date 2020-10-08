@@ -1,0 +1,16 @@
+﻿@model TaxonomyTree.Models.HomeModel
+
+@{
+    ViewBag.Title = "Taxonomy Tree";
+}
+
+<div class="mainContainer">
+    <div class="searchLabel">
+        Filter: <input type="text" id="searchBox">
+        <input type="button" value="search" id="filterButton">
+        <input type="button" value="clear" id="filterButton2">
+        <span id="searchInfo"></span>
+    </div>
+    <div class="infoText">Loading, please wait...</div>
+    <div class="dataTable"></div>
+</div>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4e30885101f44d939adc4fcccd89ef46" Name="Diagram1">
+        <EntityTypeShape EntityType="KandCModel.taxonomy" Width="1.5" PointX="13.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KandCModel.project_stage" Width="1.5" PointX="10.375" PointY="2.75" />
+        <EntityTypeShape EntityType="KandCModel.client_involvement" Width="1.5" PointX="12" PointY="0.5" />
+        <EntityTypeShape EntityType="KandCModel.external_3rd_party" Width="1.5" PointX="13.75" PointY="0.5" />
+        <EntityTypeShape EntityType="KandCModel.client_engagement" Width="1.5" PointX="8.625" PointY="0.5" />
+        <EntityTypeShape EntityType="KandCModel.end_product" Width="1.5" PointX="8.625" PointY="2.5" />
+        <EntityTypeShape EntityType="KandCModel.perdiem" Width="1.5" PointX="8.625" PointY="4.375" />
+        <EntityTypeShape EntityType="KandCModel.staffing" Width="1.5" PointX="13.75" PointY="2.375" />
+        <EntityTypeShape EntityType="KandCModel.team_role" Width="1.5" PointX="12" PointY="2.375" />
+        <EntityTypeShape EntityType="KandCModel.sysdiagram" Width="1.5" PointX="10.25" PointY="0.5" />
+        <EntityTypeShape EntityType="KandCModel.initiative_type" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="KandCModel.notification" Width="1.5" PointX="2.75" PointY="0.5" />
+        <EntityTypeShape EntityType="KandCModel.notification_recipient" Width="1.5" PointX="6.5" PointY="1.625" />
+        <EntityTypeShape EntityType="KandCModel.notification_replyto" Width="1.5" PointX="4.625" PointY="0.875" />
+        <EntityTypeShape EntityType="KandCModel.notification_sendto" Width="1.5" PointX="4.625" PointY="3.125" />
+        <EntityTypeShape EntityType="KandCModel.notification_trigger" Width="1.5" PointX="0.75" PointY="0.5" />
+        <AssociationConnector Association="KandCModel.FK_notification_initiative_type" />
+        <AssociationConnector Association="KandCModel.FK_notification_notification_trigger" />
+        <AssociationConnector Association="KandCModel.FK_notification_replyto_notification" />
+        <AssociationConnector Association="KandCModel.FK_notification_sendto_notification" />
+        <AssociationConnector Association="KandCModel.FK_notification_replyto_notification_recipient" />
+        <AssociationConnector Association="KandCModel.FK_notification_sendto_notification_recipient" />
+        <EntityTypeShape EntityType="KandCModel.engageterm" Width="1.5" PointX="11.875" PointY="5" />
+        <EntityTypeShape EntityType="KandCModel.approver" Width="1.5" PointX="5.25" PointY="8.125" />
+        <EntityTypeShape EntityType="KandCModel.department" Width="1.5" PointX="5.375" PointY="5.875" />
+        <EntityTypeShape EntityType="KandCModel.owner_approver" Width="1.5" PointX="3.125" PointY="8.125" />
+        <EntityTypeShape EntityType="KandCModel.owner_contact" Width="1.5" PointX="0.625" PointY="9.75" />
+        <EntityTypeShape EntityType="KandCModel.owner_department" Width="1.5" PointX="3.25" PointY="5.875" />
+        <EntityTypeShape EntityType="KandCModel.proxy_approver" Width="1.5" PointX="7.25" PointY="8.125" />
+        <AssociationConnector Association="KandCModel.FK_owner_approver_approver" />
+        <AssociationConnector Association="KandCModel.FK_proxy_approver_approver1" />
+        <AssociationConnector Association="KandCModel.FK_owner_department_department" />
+        <EntityTypeShape EntityType="KandCModel.owner" Width="1.5" PointX="0.75" PointY="6.125" />
+        <AssociationConnector Association="KandCModel.FK_owner_approver_owner" />
+        <AssociationConnector Association="KandCModel.FK_owner_contact_owner" />
+        <AssociationConnector Association="KandCModel.FK_owner_department_owner" />
+        <AssociationConnector Association="KandCModel.FK_owner_owner1" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

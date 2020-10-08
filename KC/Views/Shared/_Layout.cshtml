@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Knowledge & Capability</title>
+    <meta name="description" content="Latest updates and statistic charts">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+    @if (ViewBag.JSPage == "showdata.js")
+    {
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdn.datatables.net/rowgroup/1.1.1/css/rowGroup.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    }
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="~/assets/media/logos/favicon.ico" />
+</head>
+<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header--minimize-menu kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-page--loading">
+    <!-- begin:: Page -->
+    <!-- begin:: Header Mobile -->
+    <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
+        <div class="kt-header-mobile__logo">
+            <a href="index?openpage">
+                <img alt="Logo" src="/assets/media/logos/logo-5.png" />
+            </a>
+        </div>
+        <div class="kt-header-mobile__toolbar">
+            <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
+            <button class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
+        </div>
+    </div>
+    <!-- end:: Header Mobile -->
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+                <!-- begin:: Header -->
+                <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed " data-ktheader-minimize="on" style="background-image: url('/assets/media/layout/bg-mck.png')">
+                    <div class="kt-header__top">
+                        <div class="kt-container ">
+                            <!-- begin:: Brand -->
+                            <div class="kt-header__brand   kt-grid__item" id="kt_header_brand">
+                                <div class="kt-header__brand-logo">
+                                    <a href="index?openpage">
+                                        <img alt="Logo" src="~/assets/media/logos/logo-7.png" class="kt-header__brand-logo-default" />
+                                        <img alt="Logo" src="assets/media/logos/logo-5.png" class="kt-header__brand-logo-sticky" />
+                                    </a>
+                                </div>
+                                <div>
+                                    <h1 style="color:#fff;padding-left:50px">Knowledge & Capability</h1>
+                                </div>
+                            </div>
+                            <!-- end:: Brand -->
+                            <!-- begin:: Topbar -->
+                            <div class="kt-header__topbar">
+                                <!--begin: Notifications -->
+                                <div class="kt-header__topbar-item dropdown">
+                                    <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px,10px">
+                                        <span class="kt-header__topbar-icon"><i class="flaticon-alarm"></i></span>
+                                        <span class="kt-badge kt-badge--danger kt-hidden" id="badgeNotifications"></span>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
+                                        <div class="kt-head kt-head--sm kt-head--skin-light">
+                                            <h3 class="kt-head__title">Notifications</h3>
+                                        </div>
+                                        <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll" data-scroll="true" data-height="270" id="lstNotifications">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end: Notifications -->
+                                <!--begin: User -->
+                                <div class="kt-header__topbar-item kt-header__topbar-item--user">
+                                    <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px,10px">
+                                        <img src="" id="userPic1" />
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-md">
+                                        <div class="kt-user-card-v4 kt-user-card-v4--skin-light kt-notification-item-padding-x">
+                                            <div class="kt-user-card-v4__avatar">
+                                                <img class="kt-rounded-" src="" id="userPic2" />
+                                            </div>
+                                            <div class="kt-user-card-v4__name" id="txtUserName"></div>
+                                        </div>
+                                        <ul class="kt-nav kt-margin-b-10">
+                                            <li class="kt-nav__item">
+                                                <a href="dashboard.html" class="kt-nav__link">
+                                                    <span class="kt-nav__link-icon"><i class="flaticon-profile"></i></span>
+                                                    <span class="kt-nav__link-text">Dashboard</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="showdata.html?open&data=notifications.all" class="kt-nav__link">
+                                                    <span class="kt-nav__link-icon"><i class="flaticon-mail-1"></i></span>
+                                                    <span class="kt-nav__link-text">All notifications</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--end: User -->
+                            </div>
+                            <!-- end:: Topbar -->
+                        </div>
+                    </div>
+                    <div class="kt-header__bottom">
+                        <div class="kt-container ">
+                            <!-- begin: Header Menu -->
+                            <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
+                            <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
+                                <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile ">
+                                    <ul class="kt-menu__nav ">
+                                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+                                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">All Initiatives</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                                            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                                                <ul class="kt-menu__subnav">
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=bystatus" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">By Status</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=draft" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Draft</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=backtosubmitter" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Back to submitter</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=inapproval" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Submitted for approval</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=approved" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Approved</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=processcomplete" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Process complete</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=closed" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Closed</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.all&filter=byowner" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">By Owner</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+                                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">All KIs</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                                            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                                                <ul class="kt-menu__subnav">
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=bystatus" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">By Status</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=draft" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Draft</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=backtosubmitter" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Back to submitter</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=inapproval" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Submitted for approval</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=approved" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Approved</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=processcomplete" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Process complete</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=closed" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Closed</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.kip&filter=byowner" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">By Owner</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
+                                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">All PKs</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                                            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                                                <ul class="kt-menu__subnav">
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=bystatus" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">By Status</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=draft" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Draft</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=backtosubmitter" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Back to submitter</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=inapproval" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Submitted for approval</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=approved" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Approved</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=processcomplete" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Process complete</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=closed" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line secondLevel"><span></span></i><span class="kt-menu__link-text">Closed</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="showdata.html?open&data=initiatives.pk&filter=byowner" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">By Owner</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true" id="menuExport" style="display:none">
+                                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Export</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                                            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                                                <ul class="kt-menu__subnav">
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a id="report1" href="" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">All Data</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a id="report2" href="" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">All KI Data</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a id="report3" href="" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">All PK Data</span></a></li>
+                                                    <li class="kt-menu__item adminReport" aria-haspopup="true"><a id="report4" href="" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">All Budgeted Hours</span></a></li>
+                                                    <li class="kt-menu__item adminReport" aria-haspopup="true"><a id="report5" href="" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">All KI Budgeted Hours</span></a></li>
+                                                    <li class="kt-menu__item adminReport" aria-haspopup="true"><a id="report6" href="" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">All PK Budgeted Hours</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel" data-ktmenu-submenu-toggle="click" aria-haspopup="true" id="menuAdmin" style="display:none">
+                                            <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><span class="kt-menu__link-text">Administration</span><i class="kt-menu__hor-arrow la la-angle-down"></i><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
+                                            <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
+                                                <ul class="kt-menu__subnav">
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=initypes" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Initiative Types</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=clientinv" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Client Involvement</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=external3p" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">External Third Parties</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=perdiems" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Per Diem Rates</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=staffing" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Staffing Types</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=stages" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Project Stages</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=roles" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Team Roles</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=endproducts" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Project End Products</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=clienteng" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Client Engagements</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=approvers" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Approvers</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=notifirec" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Notification Recipients</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=notifitri" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Notification Triggers</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=notifications" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Notification Templates</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=departments" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Departments</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=owners" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Owners</span></a></li>
+                                                    <li class="kt-menu__item " aria-haspopup="true"><a href="/Home/ShowData?data=configuration" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i><span class="kt-menu__link-text">Configuration</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="kt-header-toolbar">
+                                    <a href="/Initiative/Create" class="btn btn-wide btn-bold btn-danger btn-upper">Create Initiative</a>
+                                </div>
+                            </div>
+                            <!-- end: Header Menu -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end:: Header -->
+                <div class="kt-container  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch">
+                    <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+                        <div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+
+                <!-- begin:: Footer -->
+                <div class="kt-footer kt-grid__item" style="background-image: url('/assets/media/layout/bg-mck.png')" id="kt_footer">
+                    <div class="kt-container ">
+
+                        <div class="kt-footer__bottom">
+                            <div class="kt-footer__copyright">
+                                2019&nbsp;&copy;&nbsp;<a href="https://www.mckinsey.com/" target="_blank" class="kt-link">McKinsey & Company</a>
+                            </div>
+                            <div class="kt-footer__menu">
+                                <a href="https://home.intranet.mckinsey.com/knowresearch/howtos/proxypages/proxy_kip_pk.html" target="_blank" class="kt-link">About</a>
+                                <a href="contact.html?open" target="_top" class="kt-link">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end:: Footer -->
+            </div>
+        </div>
+    </div>
+    <!-- end:: Page -->
+    <script>
+        var KTAppOptions = { "colors": { "state": { "brand": "#4d5cf2", "metal": "#c4c5d6", "light": "#ffffff", "accent": "#00c5dc", "primary": "#5867dd", "success": "#34bfa3", "info": "#36a3f7", "warning": "#ffb822", "danger": "#fd3995", "focus": "#9816f4" }, "base": { "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"], "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"] } } };
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    @if (ViewBag.JSPage == "showdata.js")
+    {
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.datatables.net/rowgroup/1.1.1/js/dataTables.rowGroup.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.4.0/perfect-scrollbar.min.js"></script>
+    }
+    @if ((ViewBag.JSPage == "notification.js") || (ViewBag.JSPage == "initiativetype.js"))
+    { 
+        <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    }
+    <script src="~/assets/js/scripts.bundle.js" type="text/javascript"></script>
+    <script src="~/assets/js/pages/@ViewBag.JSPage" type="text/javascript"></script>
+    <script src="~/assets/js/pages/tools.js" type="text/javascript"></script>
+</body>
+<!-- end::Body -->
+</html>

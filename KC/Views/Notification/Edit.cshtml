@@ -1,0 +1,206 @@
+﻿@model KC.Models.NotificationModel
+
+@{
+    ViewBag.Title = "Notification";
+    ViewBag.JSPage = "notification.js";
+}
+<script>
+    var mailBodyEditor;
+    var js_astList = '@string.Join(";", Model.also_send_to)';
+    var js_artList = '@string.Join(";", Model.also_reply_to)';
+</script>
+
+<!-- header with breadcrumbs -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Administration</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <div class="kt-subheader__breadcrumbs">
+                <a href="" id="hb_link" class="kt-subheader__breadcrumbs-link">@ViewBag.Title</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- body -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet">
+                <!-- title -->
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title @(!ViewBag.isValid ? "text-danger" : "")">@ViewBag.Title</h3>
+                    </div>
+                </div>
+                <!-- loading -->
+                <div class="kt-portlet__body" id="formLoading">
+                    <div class="kt-section">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- form -->
+                <form action="/Notification/Edit?id=@Model.notification_id" method="post" class="kt-form" id="mainForm" style="display:none">
+                    @Html.HiddenFor(model => model.notification_id)
+                    <div class="kt-portlet__body">
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.name, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input class="form-control" type="text" id="name" name="name" value="@Model.name" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.initiative_type_id, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-1 col-md-2 col-sm-12">
+                                <select class="form-control kt_selectpicker" id="initiative_type_id" name="initiative_type_id">
+                                    @foreach (var iniType in Model.lstIniTypes)
+                                    {
+                                        <option value="@iniType.initiative_type_id"@(iniType.initiative_type_id==Model.initiative_type_id?" selected":"")>@iniType.code</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.notification_trigger_id, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select class="form-control kt_selectpicker" id="notification_trigger_id" name="notification_trigger_id">
+                                    @foreach (var notTrigger in Model.lstNotTriggers)
+                                    {
+                                        <option value="@notTrigger.notification_trigger_id"@(notTrigger.notification_trigger_id==Model.notification_trigger_id?" selected":"")>@notTrigger.name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.send_to, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select class="form-control kt_selectpicker" id="send_to" name="send_to" multiple style="height:200px">
+                                    @foreach (var notSendTo in Model.lstNotSendTo)
+                                    {
+                                        <option value="@notSendTo.notification_recipient_id"@(Model.send_to!=null&&Model.send_to.Contains(notSendTo.notification_recipient_id)?" selected":"")>@notSendTo.name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.also_send_to, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select class="form-control" id="also_send_to" name="also_send_to" multiple></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.reply_to, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select class="form-control kt_selectpicker" id="reply_to" name="reply_to" multiple style="height:120px">
+                                    @foreach (var notReplyTo in Model.lstNotReplyTo)
+                                    {
+                                        <option value="@notReplyTo.notification_recipient_id"@(Model.reply_to!=null&&Model.reply_to.Contains(notReplyTo.notification_recipient_id)?" selected":"")>@notReplyTo.name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.also_reply_to, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select class="form-control" id="also_reply_to" name="also_reply_to" multiple></select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.when_to_send, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-md-6 col-sm-12">
+                                <input class="form-control col-md-2" type="text" value="@Model.when_to_send" id="when_to_send" name="when_to_send">
+                                <span class="form-text text-muted">weeks before Projected End Date (0 = reminders won't be sent)</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.oldest_year, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-md-6 col-sm-12">
+                                <input class="form-control col-md-2" type="text" value="@Model.oldest_year" id="oldest_year" name="oldest_year">
+                                <span class="form-text text-muted">older won't receive any reminder</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.frm, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input class="form-control" type="text" id="frm" name="frm" value="@Model.frm" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.subject, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                <input class="form-control" type="text" id="subject" name="subject" value="@Model.subject" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">
+                                Body
+                                <span class="form-text text-muted">
+                                    The following placeholders can be used:<br>
+                                    &lt;&lt;id&gt;&gt;<br>
+                                    &lt;&lt;type&gt;&gt;<br>
+                                    &lt;&lt;status&gt;&gt;<br>
+                                    &lt;&lt;name&gt;&gt;<br>
+                                    &lt;&lt;description&gt;&gt;*<br>
+                                    &lt;&lt;owner&gt;&gt;<br>
+                                    &lt;&lt;ownercontacts&gt;&gt;<br>
+                                    &lt;&lt;department&gt;&gt;<br>
+                                    &lt;&lt;departmentcode&gt;&gt;<br>
+                                    &lt;&lt;approver&gt;&gt;<br>
+                                    &lt;&lt;proxyapprovers&gt;&gt;<br>
+                                    &lt;&lt;chargecode&gt;&gt;<br>
+                                    &lt;&lt;startdate&gt;&gt;<br>
+                                    &lt;&lt;projectedenddate&gt;&gt;<br>
+                                    &lt;&lt;dcs&gt;&gt;<br>
+                                    &lt;&lt;ed&gt;&gt;<br>
+                                    &lt;&lt;staffingcontact&gt;&gt;<br>
+                                    &lt;&lt;preferredregionoffice&gt;&gt;<br>
+                                    &lt;&lt;staffingneed&gt;&gt;<br>
+                                    &lt;&lt;link&gt;&gt;*<br>
+                                    &lt;&lt;submitter&gt;&gt;<br>
+                                    <br>
+                                    * not allowed in Subject
+                                </span>
+                            </label>
+                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                <div id="kt_mail_body" style="height: 325px">@Html.Raw(Model.body)</div>
+                            </div>
+                            <input class="form-control" type="text" value="" id="body" name="body" style="display:none">
+                        </div>
+                    </div>
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <button type="button" class="btn btn-primary" id="btnSubmit">Submit</button>
+                            <button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- validation -->
+    @if (!ViewBag.isValid)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Validation errors</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                @Html.ValidationSummary(false, "Please address the following errors on page:", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

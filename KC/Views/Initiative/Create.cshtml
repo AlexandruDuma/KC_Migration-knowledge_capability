@@ -1,0 +1,158 @@
+﻿@model KC.Models.InitiativeCreateModel
+
+@{
+    ViewBag.Title = "New Initiative";
+    ViewBag.JSPage = "initiativecreate.js";
+}
+<!-- header with breadcrumbs -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">New Initiative</h3>
+        </div>
+    </div>
+</div>
+<!-- body -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet">
+                <!-- title -->
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Select type of initiative code to open</h3>
+                    </div>
+                </div>
+                <!-- loading -->
+                <div class="kt-portlet__body" id="formLoading">
+                    <div class="kt-section">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- form -->
+                <form action="/Initiative/Create" method="post" class="kt-form" id="mainForm" style="display:none">
+                    <input type="text" id="initiative_type" name="initiative_type" style="display:none" />
+                    <input type="text" id="staffing" name="staffing" style="display:none" />
+                    <div class="kt-portlet__body">
+                        <div class="accordion accordion-outline" id="accordionInitiativeType">
+                            @{int i = 0;}
+                            @foreach (var iniType in Model.initiativeTypeOptions)
+                            {
+                                {
+                                    i++;
+                                }
+                                <div class="card">
+                                    <div class="card-header" id="heading-@iniType.initiative_type_id">
+                                        <div class="card-title collapsed" data-toggle="collapse" data-target="#collapse-@iniType.initiative_type_id" aria-expanded="@(i==1?"true":"false")" aria-controls="collapse-@iniType.initiative_type_id">
+                                            <i class="flaticon-doc"></i> <span>@Html.Raw(iniType.name)<br><small>@iniType.short_description</small></span>&nbsp;&nbsp;<span class="badge badge-pill badge-@iniType.display_color_class">@iniType.code</span>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-@iniType.initiative_type_id" class="card-body-wrapper collapse" aria-labelledby="heading-@iniType.initiative_type_id" data-parent="#accordionInitiativeType">
+                                        <div class="card-body">
+                                            @Html.Raw(iniType.description)
+
+                                            @if (iniType.allow_creation)
+                                            {
+                                                <div style="margin-top:7px">
+                                                    <div class="row" id="StaffingType-@iniType.code">
+                                                        @foreach (var staffingType in Model.staffingOptions)
+                                                        {
+                                                            <div class="col-lg-6">
+                                                                <label class="kt-option kt-option kt-option--plain">
+                                                                    <span class="kt-option__control">
+                                                                        <span class="kt-checkbox kt-checkbox--brand">
+                                                                            <input type="checkbox" name="@(iniType.code)Staffing" id="@(iniType.code)Staffing" value="@staffingType.staffing_id"><span></span>
+                                                                        </span>
+                                                                    </span>
+                                                                    <span class="kt-option__label">
+                                                                        <span class="kt-option__head">
+                                                                            <span class="kt-option__title">@staffingType.name</span>
+                                                                        </span>
+                                                                        @if (@staffingType.description.Length > 2)
+                                                                        {
+                                                                            <span class="kt-option__body">@staffingType.description</span>
+                                                                        }
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div class="row">
+                                                        <label class="col-3 col-form-label"><h5><b>125 FTE Initiative</b>&nbsp;<span class="badge badge-pill badge-@iniType.display_color_class">@iniType.code</span></h5></label>
+                                                        <div class="col-3">
+                                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                                                                <label>
+                                                                    <input type="checkbox" name="@(iniType.code)FTE" id="@(iniType.code)FTE" value="Yes">
+                                                                    <span></span>
+                                                                </label>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <button type="button" class="btn btn-outline-@iniType.display_color_class active" id="btnCreate@(iniType.code)" data-toggle="modal" data-target="#exampleModalCenter">Create</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- validation -->
+    @if (!ViewBag.isValid)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Validation errors</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                @Html.ValidationSummary(false, "Please address the following errors on page:", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">New initiative</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Please review and confirm the following attributes of the new initiative:<br><br>
+                        Type: <b><span id="mdVal1"></span></b><br>
+                        Staffing: <b><span id="mdVal2"></span></b><br>
+                        125 FTE Initiative: <b><span id="mdVal3"></span></b>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-brand" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-brand" id="confirmInitiative">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

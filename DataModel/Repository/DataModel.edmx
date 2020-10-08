@@ -1,0 +1,1216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KandCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="approver">
+          <Key>
+            <PropertyRef Name="approver_id" />
+          </Key>
+          <Property Name="approver_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client_engagement">
+          <Key>
+            <PropertyRef Name="client_engagement_id" />
+          </Key>
+          <Property Name="client_engagement_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client_involvement">
+          <Key>
+            <PropertyRef Name="client_involvement_id" />
+          </Key>
+          <Property Name="client_involvement_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="allow_initiative_creation" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="end_product">
+          <Key>
+            <PropertyRef Name="end_product_id" />
+          </Key>
+          <Property Name="end_product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="engageterm">
+          <Key>
+            <PropertyRef Name="engageterm_id" />
+          </Key>
+          <Property Name="engageterm_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="class_code" Type="int" Nullable="false" />
+          <Property Name="label" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="magic_tree" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="selectable" Type="bit" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="external_3rd_party">
+          <Key>
+            <PropertyRef Name="external_3rd_party_id" />
+          </Key>
+          <Property Name="external_3rd_party_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="initiative_type">
+          <Key>
+            <PropertyRef Name="initiative_type_id" />
+          </Key>
+          <Property Name="initiative_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="short_description" Type="varchar" MaxLength="500" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="allow_creation" Type="bit" Nullable="false" />
+          <Property Name="display_color_class" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="initiative_type_id" Type="int" Nullable="false" />
+          <Property Name="notification_trigger_id" Type="int" Nullable="false" />
+          <Property Name="also_send_to" Type="varchar" MaxLength="500" />
+          <Property Name="also_reply_to" Type="varchar" MaxLength="500" />
+          <Property Name="oldest_year" Type="int" />
+          <Property Name="when_to_send" Type="int" />
+          <Property Name="frm" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="subject" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="body" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_recipient">
+          <Key>
+            <PropertyRef Name="notification_recipient_id" />
+          </Key>
+          <Property Name="notification_recipient_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="show_also_in_replyto" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_replyto">
+          <Key>
+            <PropertyRef Name="notification_replyto_id" />
+          </Key>
+          <Property Name="notification_replyto_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="notification_id" Type="int" Nullable="false" />
+          <Property Name="notification_recipient_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_sendto">
+          <Key>
+            <PropertyRef Name="notification_sendto_id" />
+          </Key>
+          <Property Name="notification_sendto_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="notification_id" Type="int" Nullable="false" />
+          <Property Name="notification_recipient_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_trigger">
+          <Key>
+            <PropertyRef Name="notification_trigger_id" />
+          </Key>
+          <Property Name="notification_trigger_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="owner">
+          <Key>
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="owner_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="parent_id" Type="int" />
+        </EntityType>
+        <EntityType Name="owner_approver">
+          <Key>
+            <PropertyRef Name="owner_approver_id" />
+          </Key>
+          <Property Name="owner_approver_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="approver_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="owner_contact">
+          <Key>
+            <PropertyRef Name="owner_contact_id" />
+          </Key>
+          <Property Name="owner_contact_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="owner_department">
+          <Key>
+            <PropertyRef Name="owner_department_id" />
+          </Key>
+          <Property Name="owner_department_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="department_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="perdiem">
+          <Key>
+            <PropertyRef Name="perdiem_id" />
+          </Key>
+          <Property Name="perdiem_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="value" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="project_stage">
+          <Key>
+            <PropertyRef Name="project_stage_id" />
+          </Key>
+          <Property Name="project_stage_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="proxy_approver">
+          <Key>
+            <PropertyRef Name="proxy_approver_id" />
+          </Key>
+          <Property Name="proxy_approver_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="approver_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staffing">
+          <Key>
+            <PropertyRef Name="staffing_id" />
+          </Key>
+          <Property Name="staffing_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="taxonomy">
+          <Key>
+            <PropertyRef Name="taxonomy_id" />
+          </Key>
+          <Property Name="taxonomy_id" Type="int" Nullable="false" />
+          <Property Name="parent_taxonomy_id" Type="int" />
+          <Property Name="text" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="archive" Type="bit" />
+          <Property Name="definition" Type="varchar" MaxLength="1500" />
+          <Property Name="magic_tree" Type="varchar" MaxLength="400" />
+          <Property Name="is_practice" Type="bit" />
+          <Property Name="legacy_id" Type="int" />
+          <Property Name="legacy_parent_id" Type="int" />
+        </EntityType>
+        <EntityType Name="team_role">
+          <Key>
+            <PropertyRef Name="team_role_id" />
+          </Key>
+          <Property Name="team_role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_order" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="legacy" Type="bit" Nullable="false" />
+          <Property Name="can_multiple" Type="bit" Nullable="false" />
+          <Property Name="mandatory" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_notification_initiative_type">
+          <End Role="initiative_type" Type="Self.initiative_type" Multiplicity="1" />
+          <End Role="notification" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative_type">
+              <PropertyRef Name="initiative_type_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="initiative_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_notification_trigger">
+          <End Role="notification_trigger" Type="Self.notification_trigger" Multiplicity="1" />
+          <End Role="notification" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_trigger">
+              <PropertyRef Name="notification_trigger_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="notification_trigger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_replyto_notification">
+          <End Role="notification" Type="Self.notification" Multiplicity="1" />
+          <End Role="notification_replyto" Type="Self.notification_replyto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification">
+              <PropertyRef Name="notification_id" />
+            </Principal>
+            <Dependent Role="notification_replyto">
+              <PropertyRef Name="notification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_replyto_notification_recipient">
+          <End Role="notification_recipient" Type="Self.notification_recipient" Multiplicity="1" />
+          <End Role="notification_replyto" Type="Self.notification_replyto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_recipient">
+              <PropertyRef Name="notification_recipient_id" />
+            </Principal>
+            <Dependent Role="notification_replyto">
+              <PropertyRef Name="notification_recipient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_sendto_notification">
+          <End Role="notification" Type="Self.notification" Multiplicity="1" />
+          <End Role="notification_sendto" Type="Self.notification_sendto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification">
+              <PropertyRef Name="notification_id" />
+            </Principal>
+            <Dependent Role="notification_sendto">
+              <PropertyRef Name="notification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_sendto_notification_recipient">
+          <End Role="notification_recipient" Type="Self.notification_recipient" Multiplicity="1" />
+          <End Role="notification_sendto" Type="Self.notification_sendto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_recipient">
+              <PropertyRef Name="notification_recipient_id" />
+            </Principal>
+            <Dependent Role="notification_sendto">
+              <PropertyRef Name="notification_recipient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_approver_approver">
+          <End Role="approver" Type="Self.approver" Multiplicity="1" />
+          <End Role="owner_approver" Type="Self.owner_approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approver">
+              <PropertyRef Name="approver_id" />
+            </Principal>
+            <Dependent Role="owner_approver">
+              <PropertyRef Name="approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_approver_owner">
+          <End Role="owner" Type="Self.owner" Multiplicity="1" />
+          <End Role="owner_approver" Type="Self.owner_approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner_approver">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_contact_owner">
+          <End Role="owner" Type="Self.owner" Multiplicity="1" />
+          <End Role="owner_contact" Type="Self.owner_contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner_contact">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_department_department">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="owner_department" Type="Self.owner_department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="owner_department">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_department_owner">
+          <End Role="owner" Type="Self.owner" Multiplicity="1" />
+          <End Role="owner_department" Type="Self.owner_department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner_department">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_owner1">
+          <End Role="owner" Type="Self.owner" Multiplicity="0..1" />
+          <End Role="owner1" Type="Self.owner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner1">
+              <PropertyRef Name="parent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proxy_approver_approver1">
+          <End Role="approver" Type="Self.approver" Multiplicity="1" />
+          <End Role="proxy_approver" Type="Self.proxy_approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approver">
+              <PropertyRef Name="approver_id" />
+            </Principal>
+            <Dependent Role="proxy_approver">
+              <PropertyRef Name="approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KandCModelStoreContainer">
+          <EntitySet Name="approver" EntityType="Self.approver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client_engagement" EntityType="Self.client_engagement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client_involvement" EntityType="Self.client_involvement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="end_product" EntityType="Self.end_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="engageterm" EntityType="Self.engageterm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="external_3rd_party" EntityType="Self.external_3rd_party" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="initiative_type" EntityType="Self.initiative_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification" EntityType="Self.notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification_recipient" EntityType="Self.notification_recipient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification_replyto" EntityType="Self.notification_replyto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification_sendto" EntityType="Self.notification_sendto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification_trigger" EntityType="Self.notification_trigger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="owner" EntityType="Self.owner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="owner_approver" EntityType="Self.owner_approver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="owner_contact" EntityType="Self.owner_contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="owner_department" EntityType="Self.owner_department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="perdiem" EntityType="Self.perdiem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="project_stage" EntityType="Self.project_stage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="proxy_approver" EntityType="Self.proxy_approver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staffing" EntityType="Self.staffing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taxonomy" EntityType="Self.taxonomy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="team_role" EntityType="Self.team_role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_notification_initiative_type" Association="Self.FK_notification_initiative_type">
+            <End Role="initiative_type" EntitySet="initiative_type" />
+            <End Role="notification" EntitySet="notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_notification_trigger" Association="Self.FK_notification_notification_trigger">
+            <End Role="notification_trigger" EntitySet="notification_trigger" />
+            <End Role="notification" EntitySet="notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_replyto_notification" Association="Self.FK_notification_replyto_notification">
+            <End Role="notification" EntitySet="notification" />
+            <End Role="notification_replyto" EntitySet="notification_replyto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_replyto_notification_recipient" Association="Self.FK_notification_replyto_notification_recipient">
+            <End Role="notification_recipient" EntitySet="notification_recipient" />
+            <End Role="notification_replyto" EntitySet="notification_replyto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_sendto_notification" Association="Self.FK_notification_sendto_notification">
+            <End Role="notification" EntitySet="notification" />
+            <End Role="notification_sendto" EntitySet="notification_sendto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_sendto_notification_recipient" Association="Self.FK_notification_sendto_notification_recipient">
+            <End Role="notification_recipient" EntitySet="notification_recipient" />
+            <End Role="notification_sendto" EntitySet="notification_sendto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_approver_approver" Association="Self.FK_owner_approver_approver">
+            <End Role="approver" EntitySet="approver" />
+            <End Role="owner_approver" EntitySet="owner_approver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_approver_owner" Association="Self.FK_owner_approver_owner">
+            <End Role="owner" EntitySet="owner" />
+            <End Role="owner_approver" EntitySet="owner_approver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_contact_owner" Association="Self.FK_owner_contact_owner">
+            <End Role="owner" EntitySet="owner" />
+            <End Role="owner_contact" EntitySet="owner_contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_department_department" Association="Self.FK_owner_department_department">
+            <End Role="department" EntitySet="department" />
+            <End Role="owner_department" EntitySet="owner_department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_department_owner" Association="Self.FK_owner_department_owner">
+            <End Role="owner" EntitySet="owner" />
+            <End Role="owner_department" EntitySet="owner_department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_owner1" Association="Self.FK_owner_owner1">
+            <End Role="owner" EntitySet="owner" />
+            <End Role="owner1" EntitySet="owner" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proxy_approver_approver1" Association="Self.FK_proxy_approver_approver1">
+            <End Role="approver" EntitySet="approver" />
+            <End Role="proxy_approver" EntitySet="proxy_approver" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KandCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="taxonomy">
+          <Key>
+            <PropertyRef Name="taxonomy_id" />
+          </Key>
+          <Property Name="taxonomy_id" Type="Int32" Nullable="false" />
+          <Property Name="parent_taxonomy_id" Type="Int32" />
+          <Property Name="text" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="archive" Type="Boolean" />
+          <Property Name="definition" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="magic_tree" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="is_practice" Type="Boolean" />
+          <Property Name="legacy_id" Type="Int32" />
+          <Property Name="legacy_parent_id" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="KandCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="taxonomies" EntityType="Self.taxonomy" />
+          <EntitySet Name="project_stage" EntityType="KandCModel.project_stage" />
+          <EntitySet Name="client_involvement" EntityType="KandCModel.client_involvement" />
+          <EntitySet Name="external_3rd_party" EntityType="KandCModel.external_3rd_party" />
+          <EntitySet Name="client_engagement" EntityType="KandCModel.client_engagement" />
+          <EntitySet Name="end_product" EntityType="KandCModel.end_product" />
+          <EntitySet Name="perdiems" EntityType="KandCModel.perdiem" />
+          <EntitySet Name="staffings" EntityType="KandCModel.staffing" />
+          <EntitySet Name="team_role" EntityType="KandCModel.team_role" />
+          <EntitySet Name="sysdiagrams" EntityType="KandCModel.sysdiagram" />
+          <EntitySet Name="initiative_type" EntityType="KandCModel.initiative_type" />
+          <EntitySet Name="notifications" EntityType="KandCModel.notification" />
+          <EntitySet Name="notification_recipient" EntityType="KandCModel.notification_recipient" />
+          <EntitySet Name="notification_replyto" EntityType="KandCModel.notification_replyto" />
+          <EntitySet Name="notification_sendto" EntityType="KandCModel.notification_sendto" />
+          <EntitySet Name="notification_trigger" EntityType="KandCModel.notification_trigger" />
+          <AssociationSet Name="FK_notification_initiative_type" Association="KandCModel.FK_notification_initiative_type">
+            <End Role="initiative_type" EntitySet="initiative_type" />
+            <End Role="notification" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_notification_trigger" Association="KandCModel.FK_notification_notification_trigger">
+            <End Role="notification_trigger" EntitySet="notification_trigger" />
+            <End Role="notification" EntitySet="notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_replyto_notification" Association="KandCModel.FK_notification_replyto_notification">
+            <End Role="notification" EntitySet="notifications" />
+            <End Role="notification_replyto" EntitySet="notification_replyto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_sendto_notification" Association="KandCModel.FK_notification_sendto_notification">
+            <End Role="notification" EntitySet="notifications" />
+            <End Role="notification_sendto" EntitySet="notification_sendto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_replyto_notification_recipient" Association="KandCModel.FK_notification_replyto_notification_recipient">
+            <End Role="notification_recipient" EntitySet="notification_recipient" />
+            <End Role="notification_replyto" EntitySet="notification_replyto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notification_sendto_notification_recipient" Association="KandCModel.FK_notification_sendto_notification_recipient">
+            <End Role="notification_recipient" EntitySet="notification_recipient" />
+            <End Role="notification_sendto" EntitySet="notification_sendto" />
+          </AssociationSet>
+          <EntitySet Name="engageterms" EntityType="KandCModel.engageterm" />
+          <EntitySet Name="approvers" EntityType="KandCModel.approver" />
+          <EntitySet Name="departments" EntityType="KandCModel.department" />
+          <EntitySet Name="owner_approver" EntityType="KandCModel.owner_approver" />
+          <EntitySet Name="owner_contact" EntityType="KandCModel.owner_contact" />
+          <EntitySet Name="owner_department" EntityType="KandCModel.owner_department" />
+          <EntitySet Name="proxy_approver" EntityType="KandCModel.proxy_approver" />
+          <AssociationSet Name="FK_owner_approver_approver" Association="KandCModel.FK_owner_approver_approver">
+            <End Role="approver" EntitySet="approvers" />
+            <End Role="owner_approver" EntitySet="owner_approver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_proxy_approver_approver1" Association="KandCModel.FK_proxy_approver_approver1">
+            <End Role="approver" EntitySet="approvers" />
+            <End Role="proxy_approver" EntitySet="proxy_approver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_department_department" Association="KandCModel.FK_owner_department_department">
+            <End Role="department" EntitySet="departments" />
+            <End Role="owner_department" EntitySet="owner_department" />
+          </AssociationSet>
+          <EntitySet Name="owners" EntityType="KandCModel.owner" />
+          <AssociationSet Name="FK_owner_approver_owner" Association="KandCModel.FK_owner_approver_owner">
+            <End Role="owner" EntitySet="owners" />
+            <End Role="owner_approver" EntitySet="owner_approver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_contact_owner" Association="KandCModel.FK_owner_contact_owner">
+            <End Role="owner" EntitySet="owners" />
+            <End Role="owner_contact" EntitySet="owner_contact" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_department_owner" Association="KandCModel.FK_owner_department_owner">
+            <End Role="owner" EntitySet="owners" />
+            <End Role="owner_department" EntitySet="owner_department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_owner_owner1" Association="KandCModel.FK_owner_owner1">
+            <End Role="owner" EntitySet="owners" />
+            <End Role="owner1" EntitySet="owners" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="project_stage">
+          <Key>
+            <PropertyRef Name="project_stage_id" />
+          </Key>
+          <Property Name="project_stage_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="client_involvement">
+          <Key>
+            <PropertyRef Name="client_involvement_id" />
+          </Key>
+          <Property Name="client_involvement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="external_3rd_party">
+          <Key>
+            <PropertyRef Name="external_3rd_party_id" />
+          </Key>
+          <Property Name="external_3rd_party_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="client_engagement">
+          <Key>
+            <PropertyRef Name="client_engagement_id" />
+          </Key>
+          <Property Name="client_engagement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="end_product">
+          <Key>
+            <PropertyRef Name="end_product_id" />
+          </Key>
+          <Property Name="end_product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="perdiem">
+          <Key>
+            <PropertyRef Name="perdiem_id" />
+          </Key>
+          <Property Name="perdiem_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staffing">
+          <Key>
+            <PropertyRef Name="staffing_id" />
+          </Key>
+          <Property Name="staffing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="team_role">
+          <Key>
+            <PropertyRef Name="team_role_id" />
+          </Key>
+          <Property Name="team_role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="legacy" Type="Boolean" Nullable="false" />
+          <Property Name="can_multiple" Type="Boolean" Nullable="false" />
+          <Property Name="mandatory" Type="Boolean" Nullable="false" />
+          <Property Name="display_order" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="initiative_type">
+          <Key>
+            <PropertyRef Name="initiative_type_id" />
+          </Key>
+          <Property Name="initiative_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="notifications" Relationship="KandCModel.FK_notification_initiative_type" FromRole="initiative_type" ToRole="notification" />
+          <Property Name="code" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="short_description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="allow_creation" Type="Boolean" Nullable="false" />
+          <Property Name="display_color_class" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="initiative_type_id" Type="Int32" Nullable="false" />
+          <Property Name="notification_trigger_id" Type="Int32" Nullable="false" />
+          <Property Name="also_send_to" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="also_reply_to" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="oldest_year" Type="Int32" />
+          <Property Name="when_to_send" Type="Int32" />
+          <Property Name="frm" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="subject" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="initiative_type" Relationship="KandCModel.FK_notification_initiative_type" FromRole="notification" ToRole="initiative_type" />
+          <NavigationProperty Name="notification_trigger" Relationship="KandCModel.FK_notification_notification_trigger" FromRole="notification" ToRole="notification_trigger" />
+          <NavigationProperty Name="notification_replyto" Relationship="KandCModel.FK_notification_replyto_notification" FromRole="notification" ToRole="notification_replyto" />
+          <NavigationProperty Name="notification_sendto" Relationship="KandCModel.FK_notification_sendto_notification" FromRole="notification" ToRole="notification_sendto" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="notification_recipient">
+          <Key>
+            <PropertyRef Name="notification_recipient_id" />
+          </Key>
+          <Property Name="notification_recipient_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="show_also_in_replyto" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="notification_replyto" Relationship="KandCModel.FK_notification_replyto_notification_recipient" FromRole="notification_recipient" ToRole="notification_replyto" />
+          <NavigationProperty Name="notification_sendto" Relationship="KandCModel.FK_notification_sendto_notification_recipient" FromRole="notification_recipient" ToRole="notification_sendto" />
+        </EntityType>
+        <EntityType Name="notification_replyto">
+          <Key>
+            <PropertyRef Name="notification_replyto_id" />
+          </Key>
+          <Property Name="notification_replyto_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="notification_id" Type="Int32" Nullable="false" />
+          <Property Name="notification_recipient_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="notification" Relationship="KandCModel.FK_notification_replyto_notification" FromRole="notification_replyto" ToRole="notification" />
+          <NavigationProperty Name="notification_recipient" Relationship="KandCModel.FK_notification_replyto_notification_recipient" FromRole="notification_replyto" ToRole="notification_recipient" />
+        </EntityType>
+        <EntityType Name="notification_sendto">
+          <Key>
+            <PropertyRef Name="notification_sendto_id" />
+          </Key>
+          <Property Name="notification_sendto_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="notification_id" Type="Int32" Nullable="false" />
+          <Property Name="notification_recipient_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="notification" Relationship="KandCModel.FK_notification_sendto_notification" FromRole="notification_sendto" ToRole="notification" />
+          <NavigationProperty Name="notification_recipient" Relationship="KandCModel.FK_notification_sendto_notification_recipient" FromRole="notification_sendto" ToRole="notification_recipient" />
+        </EntityType>
+        <EntityType Name="notification_trigger">
+          <Key>
+            <PropertyRef Name="notification_trigger_id" />
+          </Key>
+          <Property Name="notification_trigger_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="notifications" Relationship="KandCModel.FK_notification_notification_trigger" FromRole="notification_trigger" ToRole="notification" />
+        </EntityType>
+        <Association Name="FK_notification_initiative_type">
+          <End Type="KandCModel.initiative_type" Role="initiative_type" Multiplicity="1" />
+          <End Type="KandCModel.notification" Role="notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative_type">
+              <PropertyRef Name="initiative_type_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="initiative_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_notification_trigger">
+          <End Type="KandCModel.notification_trigger" Role="notification_trigger" Multiplicity="1" />
+          <End Type="KandCModel.notification" Role="notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_trigger">
+              <PropertyRef Name="notification_trigger_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="notification_trigger_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_replyto_notification">
+          <End Type="KandCModel.notification" Role="notification" Multiplicity="1" />
+          <End Type="KandCModel.notification_replyto" Role="notification_replyto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification">
+              <PropertyRef Name="notification_id" />
+            </Principal>
+            <Dependent Role="notification_replyto">
+              <PropertyRef Name="notification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_sendto_notification">
+          <End Type="KandCModel.notification" Role="notification" Multiplicity="1" />
+          <End Type="KandCModel.notification_sendto" Role="notification_sendto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification">
+              <PropertyRef Name="notification_id" />
+            </Principal>
+            <Dependent Role="notification_sendto">
+              <PropertyRef Name="notification_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_replyto_notification_recipient">
+          <End Type="KandCModel.notification_recipient" Role="notification_recipient" Multiplicity="1" />
+          <End Type="KandCModel.notification_replyto" Role="notification_replyto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_recipient">
+              <PropertyRef Name="notification_recipient_id" />
+            </Principal>
+            <Dependent Role="notification_replyto">
+              <PropertyRef Name="notification_recipient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notification_sendto_notification_recipient">
+          <End Type="KandCModel.notification_recipient" Role="notification_recipient" Multiplicity="1" />
+          <End Type="KandCModel.notification_sendto" Role="notification_sendto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_recipient">
+              <PropertyRef Name="notification_recipient_id" />
+            </Principal>
+            <Dependent Role="notification_sendto">
+              <PropertyRef Name="notification_recipient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="engageterm">
+          <Key>
+            <PropertyRef Name="engageterm_id" />
+          </Key>
+          <Property Name="engageterm_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="class_code" Type="Int32" Nullable="false" />
+          <Property Name="label" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="magic_tree" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="selectable" Type="Boolean" Nullable="false" />
+          <Property Name="category" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="approver">
+          <Key>
+            <PropertyRef Name="approver_id" />
+          </Key>
+          <Property Name="approver_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="owner_approver" Relationship="KandCModel.FK_owner_approver_approver" FromRole="approver" ToRole="owner_approver" />
+          <NavigationProperty Name="proxy_approver" Relationship="KandCModel.FK_proxy_approver_approver1" FromRole="approver" ToRole="proxy_approver" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="allow_initiative_creation" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="owner_department" Relationship="KandCModel.FK_owner_department_department" FromRole="department" ToRole="owner_department" />
+        </EntityType>
+        <EntityType Name="owner_approver">
+          <Key>
+            <PropertyRef Name="owner_approver_id" />
+          </Key>
+          <Property Name="owner_approver_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="approver_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="approver" Relationship="KandCModel.FK_owner_approver_approver" FromRole="owner_approver" ToRole="approver" />
+          <NavigationProperty Name="owner" Relationship="KandCModel.FK_owner_approver_owner" FromRole="owner_approver" ToRole="owner" />
+        </EntityType>
+        <EntityType Name="owner_contact">
+          <Key>
+            <PropertyRef Name="owner_contact_id" />
+          </Key>
+          <Property Name="owner_contact_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="owner" Relationship="KandCModel.FK_owner_contact_owner" FromRole="owner_contact" ToRole="owner" />
+        </EntityType>
+        <EntityType Name="owner_department">
+          <Key>
+            <PropertyRef Name="owner_department_id" />
+          </Key>
+          <Property Name="owner_department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="department" Relationship="KandCModel.FK_owner_department_department" FromRole="owner_department" ToRole="department" />
+          <NavigationProperty Name="owner" Relationship="KandCModel.FK_owner_department_owner" FromRole="owner_department" ToRole="owner" />
+        </EntityType>
+        <EntityType Name="proxy_approver">
+          <Key>
+            <PropertyRef Name="proxy_approver_id" />
+          </Key>
+          <Property Name="proxy_approver_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="approver_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="approver" Relationship="KandCModel.FK_proxy_approver_approver1" FromRole="proxy_approver" ToRole="approver" />
+        </EntityType>
+        <Association Name="FK_owner_approver_approver">
+          <End Type="KandCModel.approver" Role="approver" Multiplicity="1" />
+          <End Type="KandCModel.owner_approver" Role="owner_approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approver">
+              <PropertyRef Name="approver_id" />
+            </Principal>
+            <Dependent Role="owner_approver">
+              <PropertyRef Name="approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_proxy_approver_approver1">
+          <End Type="KandCModel.approver" Role="approver" Multiplicity="1" />
+          <End Type="KandCModel.proxy_approver" Role="proxy_approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approver">
+              <PropertyRef Name="approver_id" />
+            </Principal>
+            <Dependent Role="proxy_approver">
+              <PropertyRef Name="approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_department_department">
+          <End Type="KandCModel.department" Role="department" Multiplicity="1" />
+          <End Type="KandCModel.owner_department" Role="owner_department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="owner_department">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="owner">
+          <Key>
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="owner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="parent_id" Type="Int32" />
+          <NavigationProperty Name="owner_approver" Relationship="KandCModel.FK_owner_approver_owner" FromRole="owner" ToRole="owner_approver" />
+          <NavigationProperty Name="owner_contact" Relationship="KandCModel.FK_owner_contact_owner" FromRole="owner" ToRole="owner_contact" />
+          <NavigationProperty Name="owner_department" Relationship="KandCModel.FK_owner_department_owner" FromRole="owner" ToRole="owner_department" />
+          <NavigationProperty Name="owner1" Relationship="KandCModel.FK_owner_owner1" FromRole="owner" ToRole="owner1" />
+          <NavigationProperty Name="owner2" Relationship="KandCModel.FK_owner_owner1" FromRole="owner1" ToRole="owner" />
+        </EntityType>
+        <Association Name="FK_owner_approver_owner">
+          <End Type="KandCModel.owner" Role="owner" Multiplicity="1" />
+          <End Type="KandCModel.owner_approver" Role="owner_approver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner_approver">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_contact_owner">
+          <End Type="KandCModel.owner" Role="owner" Multiplicity="1" />
+          <End Type="KandCModel.owner_contact" Role="owner_contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner_contact">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_department_owner">
+          <End Type="KandCModel.owner" Role="owner" Multiplicity="1" />
+          <End Type="KandCModel.owner_department" Role="owner_department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner_department">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_owner_owner1">
+          <End Type="KandCModel.owner" Role="owner" Multiplicity="0..1" />
+          <End Type="KandCModel.owner" Role="owner1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="owner1">
+              <PropertyRef Name="parent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KandCModelStoreContainer" CdmEntityContainer="KandCEntities">
+          <EntitySetMapping Name="taxonomies">
+            <EntityTypeMapping TypeName="KandCModel.taxonomy">
+              <MappingFragment StoreEntitySet="taxonomy">
+                <ScalarProperty Name="legacy_parent_id" ColumnName="legacy_parent_id" />
+                <ScalarProperty Name="legacy_id" ColumnName="legacy_id" />
+                <ScalarProperty Name="taxonomy_id" ColumnName="taxonomy_id" />
+                <ScalarProperty Name="parent_taxonomy_id" ColumnName="parent_taxonomy_id" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="archive" ColumnName="archive" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="magic_tree" ColumnName="magic_tree" />
+                <ScalarProperty Name="is_practice" ColumnName="is_practice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="project_stage">
+            <EntityTypeMapping TypeName="KandCModel.project_stage">
+              <MappingFragment StoreEntitySet="project_stage">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="project_stage_id" ColumnName="project_stage_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="client_involvement">
+            <EntityTypeMapping TypeName="KandCModel.client_involvement">
+              <MappingFragment StoreEntitySet="client_involvement">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="client_involvement_id" ColumnName="client_involvement_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="external_3rd_party">
+            <EntityTypeMapping TypeName="KandCModel.external_3rd_party">
+              <MappingFragment StoreEntitySet="external_3rd_party">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="external_3rd_party_id" ColumnName="external_3rd_party_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="client_engagement">
+            <EntityTypeMapping TypeName="KandCModel.client_engagement">
+              <MappingFragment StoreEntitySet="client_engagement">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="client_engagement_id" ColumnName="client_engagement_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="end_product">
+            <EntityTypeMapping TypeName="KandCModel.end_product">
+              <MappingFragment StoreEntitySet="end_product">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="end_product_id" ColumnName="end_product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="perdiems">
+            <EntityTypeMapping TypeName="KandCModel.perdiem">
+              <MappingFragment StoreEntitySet="perdiem">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="perdiem_id" ColumnName="perdiem_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staffings">
+            <EntityTypeMapping TypeName="KandCModel.staffing">
+              <MappingFragment StoreEntitySet="staffing">
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="staffing_id" ColumnName="staffing_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="team_role">
+            <EntityTypeMapping TypeName="KandCModel.team_role">
+              <MappingFragment StoreEntitySet="team_role">
+                <ScalarProperty Name="display_order" ColumnName="display_order" />
+                <ScalarProperty Name="mandatory" ColumnName="mandatory" />
+                <ScalarProperty Name="can_multiple" ColumnName="can_multiple" />
+                <ScalarProperty Name="legacy" ColumnName="legacy" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="team_role_id" ColumnName="team_role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="KandCModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="initiative_type">
+            <EntityTypeMapping TypeName="KandCModel.initiative_type">
+              <MappingFragment StoreEntitySet="initiative_type">
+                <ScalarProperty Name="display_color_class" ColumnName="display_color_class" />
+                <ScalarProperty Name="allow_creation" ColumnName="allow_creation" />
+                <ScalarProperty Name="short_description" ColumnName="short_description" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="initiative_type_id" ColumnName="initiative_type_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notifications">
+            <EntityTypeMapping TypeName="KandCModel.notification">
+              <MappingFragment StoreEntitySet="notification">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="frm" ColumnName="frm" />
+                <ScalarProperty Name="when_to_send" ColumnName="when_to_send" />
+                <ScalarProperty Name="oldest_year" ColumnName="oldest_year" />
+                <ScalarProperty Name="also_reply_to" ColumnName="also_reply_to" />
+                <ScalarProperty Name="also_send_to" ColumnName="also_send_to" />
+                <ScalarProperty Name="notification_trigger_id" ColumnName="notification_trigger_id" />
+                <ScalarProperty Name="initiative_type_id" ColumnName="initiative_type_id" />
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_recipient">
+            <EntityTypeMapping TypeName="KandCModel.notification_recipient">
+              <MappingFragment StoreEntitySet="notification_recipient">
+                <ScalarProperty Name="show_also_in_replyto" ColumnName="show_also_in_replyto" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="notification_recipient_id" ColumnName="notification_recipient_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_replyto">
+            <EntityTypeMapping TypeName="KandCModel.notification_replyto">
+              <MappingFragment StoreEntitySet="notification_replyto">
+                <ScalarProperty Name="notification_recipient_id" ColumnName="notification_recipient_id" />
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+                <ScalarProperty Name="notification_replyto_id" ColumnName="notification_replyto_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_sendto">
+            <EntityTypeMapping TypeName="KandCModel.notification_sendto">
+              <MappingFragment StoreEntitySet="notification_sendto">
+                <ScalarProperty Name="notification_recipient_id" ColumnName="notification_recipient_id" />
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+                <ScalarProperty Name="notification_sendto_id" ColumnName="notification_sendto_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_trigger">
+            <EntityTypeMapping TypeName="KandCModel.notification_trigger">
+              <MappingFragment StoreEntitySet="notification_trigger">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="notification_trigger_id" ColumnName="notification_trigger_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="engageterms">
+            <EntityTypeMapping TypeName="KandCModel.engageterm">
+              <MappingFragment StoreEntitySet="engageterm">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="selectable" ColumnName="selectable" />
+                <ScalarProperty Name="magic_tree" ColumnName="magic_tree" />
+                <ScalarProperty Name="label" ColumnName="label" />
+                <ScalarProperty Name="class_code" ColumnName="class_code" />
+                <ScalarProperty Name="engageterm_id" ColumnName="engageterm_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="approvers">
+            <EntityTypeMapping TypeName="KandCModel.approver">
+              <MappingFragment StoreEntitySet="approver">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="approver_id" ColumnName="approver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="KandCModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="allow_initiative_creation" ColumnName="allow_initiative_creation" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="owner_approver">
+            <EntityTypeMapping TypeName="KandCModel.owner_approver">
+              <MappingFragment StoreEntitySet="owner_approver">
+                <ScalarProperty Name="approver_id" ColumnName="approver_id" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="owner_approver_id" ColumnName="owner_approver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="owner_contact">
+            <EntityTypeMapping TypeName="KandCModel.owner_contact">
+              <MappingFragment StoreEntitySet="owner_contact">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="owner_contact_id" ColumnName="owner_contact_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="owner_department">
+            <EntityTypeMapping TypeName="KandCModel.owner_department">
+              <MappingFragment StoreEntitySet="owner_department">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="owner_department_id" ColumnName="owner_department_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="proxy_approver">
+            <EntityTypeMapping TypeName="KandCModel.proxy_approver">
+              <MappingFragment StoreEntitySet="proxy_approver">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="approver_id" ColumnName="approver_id" />
+                <ScalarProperty Name="proxy_approver_id" ColumnName="proxy_approver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="owners">
+            <EntityTypeMapping TypeName="KandCModel.owner">
+              <MappingFragment StoreEntitySet="owner">
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

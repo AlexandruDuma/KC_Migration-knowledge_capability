@@ -1,0 +1,503 @@
+/* Sticky header's body */
+
+html body,
+html body.admin-menu {
+  margin-top: 0 !important;
+}
+html.mck-base-sticky-header body {
+  margin-top: 84px !important;
+}
+html.mck-base-sticky-header .mck-base-header-simple {
+  position: fixed;
+}
+
+/* Layout */
+
+.mck-base-header-simple {
+  width: 100%;
+  height: 84px;
+  background: #fff;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-bottom: 1px solid #D0D0D0;
+}
+.mck-base-header-simple .inner {
+  display: table;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  height: 100%;
+}
+.mck-base-header-simple .inner .left {
+  display: table-cell;
+  vertical-align: middle;
+  width: 260px;
+  min-width: 260px;
+  text-align: left;
+  padding: 0;
+}
+.mck-base-header-simple .inner .middle {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  padding: 0;
+}
+.mck-base-header-simple .inner .middle .middle-inner {
+  max-width: 1090px;
+  margin: 10px auto 0 auto;
+  display: none;
+}
+.mck-base-header-simple .inner .right {
+  display: table-cell;
+  vertical-align: middle;
+  width: 90px;
+  text-align: right;
+  padding: 0;
+}
+
+/* Hamburger */
+
+.mck-base-header-simple .hamburger-wrapper {
+  width: 65px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Logo */
+
+.mck-base-header-simple .visually-hidden {
+  display: none;
+}
+.mck-base-header-simple .logo-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+.mck-base-header-simple .logo-wrapper a.logo {
+  display: inline-block;
+  margin: 5px 0 0 0;
+}
+.mck-base-header-simple .logo-wrapper a.logo:before {
+  display: block;
+  content: "\e94c";
+  font-family: 'mck-font-icons'!important;
+  font-size: 2.625rem;
+  color: #000;
+  margin: 0;
+}
+
+/* Menu */
+
+/* For the first level */
+
+.mck-base-header-simple .menu-wrapper > ul {
+  display: block;
+  list-style: none;
+  margin: 0 0 0 -10px;
+  padding: 0;
+  height: 80px;
+  line-height: 80px;
+}
+.mck-base-header-simple .menu-wrapper > ul > li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  height: 80px;
+  line-height: 80px;
+}
+.mck-base-header-simple .menu-wrapper > ul > li > a {
+  font-family: 'McKinsey Theinhardt', 'Helvetica Neue', Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif!important;
+  font-size: 16px;
+  font-weight: 300;
+  text-transform: capitalize;
+  padding: 10px 10px 0 10px;
+  margin: 0;
+  display: block;
+  color: #000;
+  height: 80px;
+  line-height: unset;
+  position: relative;
+}
+.mck-base-header-simple .menu-wrapper > ul > li > a:hover,
+.mck-base-header-simple .menu-wrapper > ul > li > a.active {
+  color: #1F40E6;
+  transition: all 0.3s ease;
+}
+.mck-base-header-simple .menu-wrapper > ul > li > a span {
+  display: inline-block;
+  height: 70px;
+  font-size: 15px;
+}
+.mck-base-header-simple .menu-wrapper > ul > li > a:hover span,
+.mck-base-header-simple .menu-wrapper > ul > li > a.active span {
+  border-bottom: 4px solid #1F40E6;
+}
+.mck-base-header-simple .menu-wrapper > ul > li:first-child:before {
+  content: "McKinsey";
+  font-family: 'McKinsey Theinhardt' !important;
+  font-weight: 500;
+  display: block;
+  position: absolute;
+  top: -18px;
+  left: 10px;
+  margin-bottom: 10px;
+  color: #000;
+  width: 300px;
+  font-size: 14px;
+  height: 0;
+}
+.mck-base-header-simple .menu-wrapper > ul li > ul li:first-child:before {
+  content: "" !important;
+}
+
+/* For all levels common styles */
+
+.mck-base-header-simple .menu-wrapper > ul li {
+  position: relative;
+}
+.mck-base-header-simple .menu-wrapper > ul li ul {
+  display: none;
+}
+.mck-base-header-simple .menu-wrapper > ul li:hover > ul {
+  display: block;
+}
+
+/* For the second level sub menu */
+
+.mck-base-header-simple .menu-wrapper > ul > li > ul {
+  position: absolute;
+  width: 200px;
+  z-index: 1000;
+  background: #fff;
+  padding: 7.5px 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.mck-base-header-simple .menu-wrapper > ul > li > ul li a {
+  display: block;
+  line-height: 1.25;
+  padding: 7.5px 15px;
+  color: #000;
+}
+.mck-base-header-simple .menu-wrapper > ul > li > ul li a.active,
+.mck-base-header-simple .menu-wrapper > ul > li > ul li a:hover {
+  color: #1F40E6;
+}
+.mck-base-header-simple .menu-wrapper > ul > li:hover > ul {
+
+}
+
+/* For the third level sub menu */
+
+.mck-base-header-simple .menu-wrapper > ul > li > ul ul {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 1px);
+  width: 200px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-left: none;
+}
+
+/* Search */
+
+.mck-base-header-simple .search-wrapper {
+  height: 84px;
+  line-height: 84px;
+}
+.mck-base-header-simple .search-wrapper:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+}
+.mck-base-header-simple .search-wrapper.active:before {
+  opacity: 1;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+}
+.mck-base-header-simple .search-wrapper.active {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.mck-base-header-simple .search-wrapper i.search-btn,
+.mck-base-header-simple .search-wrapper i.close-btn {
+  font-family: 'mck-font-icons';
+  cursor: pointer;
+  z-index: 1000;
+  position: relative;
+  font-style: normal;
+  width: auto;
+  text-align: center;
+  display: inline-block;
+  margin-right: 20px;
+}
+.mck-base-header-simple .search-wrapper i.search-btn:before,
+.mck-base-header-simple .search-wrapper i.close-btn:before {
+  font-size: 30px;
+  color: #000;
+  display: inline-block;
+}
+.mck-base-header-simple .search-wrapper i.search-btn:hover:before,
+.mck-base-header-simple .search-wrapper i.close-btn:hover:before {
+  color: #1F40E6;
+}
+
+.mck-base-header-simple .search-wrapper i.search-btn:before {
+  content: '\e927';
+}
+.mck-base-header-simple .search-wrapper i.close-btn {
+  display: none;
+}
+.mck-base-header-simple .search-wrapper i.close-btn:before {
+  content: '\e934';
+}
+
+.mck-base-header-simple .search-wrapper.active i.close-btn {
+  display: inline-block;
+}
+.mck-base-header-simple .search-wrapper.active .search-form {
+  display: block;
+}
+
+.mck-base-header-simple .search-wrapper .search-form {
+  display: none;
+}
+.mck-base-header-simple .search-wrapper .search-form .form-wrapper {
+  background: #fff;
+  height: 100%;
+  padding: 20px;
+  -webkit-box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  padding: 20px;
+}
+.mck-base-header-simple .search-wrapper .search-form .form-wrapper .form-item label {
+  display: none;
+}
+.mck-base-header-simple .search-wrapper .search-form .form-wrapper .form-item .form-text {
+  font-family: 'McKinsey Theinhardt' !important;
+  font-weight: 500;
+  font-size: 1.25rem;
+  width: calc(100% - 100px);
+  border: none;
+  max-width: 100%;
+  height: 100%;
+  padding: 0 28px;
+  color: #051C2C;
+}
+.mck-base-header-simple .search-wrapper .search-form .form-wrapper .form-submit {
+  display: none;
+}
+
+/* Mobile sliding menu */
+
+.mck-base-header-simple .sliding-menu {
+  visibility: hidden;
+  box-shadow: 3px 0 5px rgba(0, 0, 0, .4);
+  position: fixed;
+  top: 0;
+  left: -100%;
+  bottom: 0;
+  z-index: 1000;
+  width: 100vw;
+  max-width: 768px;
+  background: #f0f0f0;
+  transition: .3s all ease-out;
+  -webkit-transition: .3s all ease-out;
+  -moz-transition: .3s all ease-out;
+  transition-delay: .1s;
+}
+.mck-base-header-simple.active .sliding-menu {
+  visibility: visible;
+  left: 0;
+  transition: .3s all ease-in;
+  -webkit-transition: .3s all ease-in;
+  -moz-transition: .3s all ease-in;
+  transition-delay: .1s;
+  overflow-y: auto;
+}
+
+.mck-base-header-simple .sliding-menu .head {
+  height: 84px;
+  background: #051C2C;
+  color: #fff;
+}
+.mck-base-header-simple .sliding-menu .head .mobile-hamburger-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  width: 60px;
+  height: 84px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  left: -2px;
+}
+.mck-base-header-simple .sliding-menu .head .mobile-hamburger-wrapper .hamburger-slider .line {
+  background: #fff;
+}
+.mck-base-header-simple .sliding-menu .head .mobile-logo-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+.mck-base-header-simple .sliding-menu .head .mobile-logo-wrapper a.logo {
+  position: relative;
+  top: 4px;
+}
+.mck-base-header-simple .sliding-menu .head .mobile-logo-wrapper a.logo:before {
+  display: block;
+  content: "\e94c";
+  font-family: 'mck-font-icons'!important;
+  font-size: 2.625rem;
+  color: #fff;
+  margin: 0;
+}
+
+.mck-base-header-simple .sliding-menu .site-name {
+  display: block;
+  border-bottom: 1px solid #B3B3B3;
+  font-family: Bower, Georgia, 'Times New Roman', serif;
+  font-size: 1.5rem;
+  color: #051C2C;
+  width: auto;
+  padding: 20px 60px;
+  top: 0;
+  line-height: 1.5;
+}
+.mck-base-header-simple .sliding-menu .site-name:before {
+  content: "McKinsey";
+  display: block;
+}
+
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > a {
+  height: auto;
+  font-family: 'McKinsey Theinhardt', 'Helvetica Neue', Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 300 !important;
+  line-height: 1.2;
+  position: relative;
+  cursor: pointer;
+  word-break: break-word;
+  color: #000;
+  display: block;
+  margin: 0;
+  padding: 16px 60px;
+}
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul {
+  float: none;
+  margin: 0;
+  list-style-position: inside;
+  list-style-type: none;
+  padding: 0;
+}
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li {
+  float: none;
+  list-style-image: none;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > a.active span,
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > a:hover span {
+  border-bottom: 2px solid #1F40E6;
+  color: #1F40E6;
+}
+
+/* For the second level sub menu */
+
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > ul {
+  padding: 0 60px 0 75px;
+}
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > ul li a {
+  color: #000;
+  padding: 8px;
+  display: block;
+}
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > ul li a.active span,
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > ul li a:hover span {
+  border-bottom: 2px solid #1F40E6;
+  color: #1F40E6;
+}
+
+.mck-base-header-simple .sliding-menu .mobile-menu-wrapper > ul > li > ul li ul {
+  padding-left: 15px;
+}
+
+/* Mobile */
+
+@media screen and (min-width: 1130px) { /* 1090px + 40px */
+  .mck-base-header-simple > .inner {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (min-width: 1180px) {
+  html.mck-base-sticky-header body,
+  html.mck-base-sticky-header body.admin-menu,
+  html.mck-base-sticky-header body.admin-menu.adminimal-menu {
+    margin-top: 90px !important;
+  }
+  html.mck-base-sticky-header body.admin-menu:before {
+    display: none;
+  }
+  .mck-base-header-simple {
+    height: 90px;
+  }
+  .mck-base-header-simple .hamburger-wrapper {
+    width: 90px;
+  }
+
+  .mck-base-header-simple .inner .middle .middle-inner {
+    display: block;
+  }
+  .mck-base-header-simple .inner .right {
+    width: 260px;
+    min-width: 260px;
+  }
+
+  .mck-base-header-simple .search-wrapper {
+    height: 90px;
+    line-height: 90px;
+  }
+  .mck-base-header-simple .search-wrapper i.search-btn,
+  .mck-base-header-simple .search-wrapper i.close-btn {
+    margin-right: 30px;
+  }
+
+}
+
+@media screen and (min-width: 1300px) {   
+  .mck-base-header-simple .menu-wrapper > ul > li > a{
+	  padding: 10px 10px 0 10px
+  }
+}

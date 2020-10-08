@@ -1,0 +1,158 @@
+﻿@model KC.Models.TeamRoleModel
+
+@{
+    ViewBag.Title = "Team Role";
+    ViewBag.JSPage = "teamrole.js";
+}
+<!-- header with breadcrumbs -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Administration</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <div class="kt-subheader__breadcrumbs">
+                <a href="" id="hb_link" class="kt-subheader__breadcrumbs-link">@ViewBag.Title</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- body -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet">
+                <!-- title -->
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title @(!ViewBag.isValid?"text-danger":"")">@ViewBag.Title</h3>
+                    </div>
+                </div>
+                <!-- loading -->
+                <div class="kt-portlet__body" id="formLoading">
+                    <div class="kt-section">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- form -->
+                <form action="/TeamRole/Edit?id=@Model.team_role_id" method="post" class="kt-form" id="mainForm" style="display:none">
+                    @Html.HiddenFor(model => model.team_role_id)
+                    <div class="kt-portlet__body">
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.display_order, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-1 col-md-2 col-sm-12">
+                                <input class="form-control" type="text" id="display_order" name="display_order" value="@Model.display_order" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.name, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input class="form-control" type="text" id="name" name="name" value="@Model.name" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.legacy, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-9 col-form-label">
+                                <div class="radio-inline">
+                                    <label class="radio radio-success">
+                                        @if (Model.legacy)
+                                        {<input type="radio" value="true" name="legacy" checked="checked" /> }
+                                        else
+                                        { <input type="radio" value="true" name="legacy" />}
+                                        <span></span>
+                                        Yes
+                                    </label>
+                                    <label class="radio radio-success">
+                                        @if (Model.legacy)
+                                        {<input type="radio" value="false" name="legacy" /> }
+                                        else
+                                        { <input type="radio" value="false" name="legacy" checked="checked" />}
+                                        <span></span>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.can_multiple, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-9 col-form-label">
+                                <div class="radio-inline">
+                                    <label class="radio radio-success">
+                                        @if (Model.can_multiple)
+                                        {<input type="radio" value="true" name="can_multiple" checked="checked" /> }
+                                        else
+                                        { <input type="radio" value="true" name="can_multiple" />}
+                                        <span></span>
+                                        Yes
+                                    </label>
+                                    <label class="radio radio-success">
+                                        @if (Model.can_multiple)
+                                        {<input type="radio" value="false" name="can_multiple" /> }
+                                        else
+                                        { <input type="radio" value="false" name="can_multiple" checked="checked" />}
+                                        <span></span>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.mandatory, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-9 col-form-label">
+                                <div class="radio-inline">
+                                    <label class="radio radio-success">
+                                        @if (Model.mandatory)
+                                        {<input type="radio" value="true" name="mandatory" checked="checked" /> }
+                                        else
+                                        { <input type="radio" value="true" name="mandatory" />}
+                                        <span></span>
+                                        Yes
+                                    </label>
+                                    <label class="radio radio-success">
+                                        @if (Model.mandatory)
+                                        {<input type="radio" value="false" name="mandatory" /> }
+                                        else
+                                        { <input type="radio" value="false" name="mandatory" checked="checked" />}
+                                        <span></span>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <button type="button" class="btn btn-primary" id="btnSubmit">Submit</button>
+                            <button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- validation -->
+    @if (!ViewBag.isValid)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Validation errors</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                @Html.ValidationSummary(false, "Please address the following errors on page:", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

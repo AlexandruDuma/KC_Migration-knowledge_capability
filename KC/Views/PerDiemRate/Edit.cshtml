@@ -1,0 +1,89 @@
+﻿@model KC.Models.PerDiemRateModel
+
+@{
+    ViewBag.Title = "Per Diem Rate";
+    ViewBag.JSPage = "perdiem.js";
+}
+<!-- header with breadcrumbs -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title">Administration</h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <div class="kt-subheader__breadcrumbs">
+                <a href="" id="hb_link" class="kt-subheader__breadcrumbs-link">@ViewBag.Title</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- body -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet">
+                <!-- title -->
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title @(!ViewBag.isValid?"text-danger":"")">@ViewBag.Title</h3>
+                    </div>
+                </div>
+                <!-- loading -->
+                <div class="kt-portlet__body" id="formLoading">
+                    <div class="kt-section">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- form -->
+                <form action="/PerDiemRate/Edit?id=@Model.perdiem_id" method="post" class="kt-form" id="mainForm" style="display:none">
+                    @Html.HiddenFor(model => model.perdiem_id)
+                    <div class="kt-portlet__body">
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.role, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <input class="form-control" type="text" id="role" name="role" value="@Model.role" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.value, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-1 col-md-2 col-sm-12">
+                                <input class="form-control" type="text" id="value" name="value" value="@Model.value" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions">
+                            <button type="button" class="btn btn-primary" id="btnSubmit">Submit</button>
+                            <button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- validation -->
+    @if (!ViewBag.isValid)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Validation errors</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                @Html.ValidationSummary(false, "Please address the following errors on page:", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

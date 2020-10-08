@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxonomy Tree</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<script>
+    var uname = '@ViewBag.uname';
+    var domain = '@ViewBag.domain';
+</script>
+
+<body>
+    <div class="mainBody">
+        <div class="middleBody">
+            <div class="header">
+                <div class="mckLogo"><img src="~/Content/Images/mck_logo.jpg"></div>
+                <div class="siteTitle">Taxonomy&nbsp;&nbsp;Tree</div>
+                <div class="menuLine">
+                    <div class="menuItem selected" displayType="taxonomy.flat" style="margin-left:20px">Taxonomy - Flat View</div>
+                    <div class="menuItem" displayType="taxonomy.tree" style="margin-left:10px">Taxonomy - Tree View</div>
+                    <div class="menuItem" displayType="ontology.flat" style="margin-left:10px;display:none" id="ofv">Ontology - Flat View</div>
+                    <div class="menuItem" displayType="ontology.tree" style="margin-left:10px;display:none" id="otv">Ontology - Tree View</div>
+                    <div class="menuItem" displayType="engage.terms" style="margin-left:10px">Engage Terms</div>
+                    <div class="menuItem menuButton" displayType="action.refresh.taxonomies" style="margin-left:10px;display:none" id="dtt">Download Taxonomies</div>
+                    <div class="menuItem menuButton" displayType="action.refresh.engage.terms" style="margin-left:10px;display:none" id="det">Download Engage Terms</div>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

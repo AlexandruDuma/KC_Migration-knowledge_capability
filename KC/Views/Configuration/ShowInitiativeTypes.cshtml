@@ -1,0 +1,24 @@
+﻿@model KC.Models.ConfigurationModel
+
+@{
+    ViewBag.Title = "Initiatives Types";
+}
+
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Description</td>
+    </tr>
+
+@foreach (var item in Model.InitiativeTypes)
+{ 
+<tr>
+    <td>@item.initiative_type_id</td>
+    <td>@Html.ActionLink(item.name, "Edit", "InitiativeType", new { Id = item.initiative_type_id}, null)</td>
+    <td>@item.description</td>
+</tr>
+}
+</table>
+
+<p>@Html.ActionLink("Add", "Create", "InitiativeType")</p>

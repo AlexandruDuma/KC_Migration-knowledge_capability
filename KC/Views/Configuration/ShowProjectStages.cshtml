@@ -1,0 +1,26 @@
+﻿@model KC.Models.ConfigurationModel
+
+@{
+    ViewBag.Title = "Project Stages";
+}
+
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Order</td>
+        <td>Name</td>
+        <td>Description</td>
+    </tr>
+
+@foreach (var item in Model.ProjectStages)
+{ 
+<tr>
+    <td>@item.project_stage_id</td>
+    <td>@item.display_order</td>
+    <td>@Html.ActionLink(item.name, "Edit", "ProjectStage", new { Id = item.project_stage_id }, null)</td>
+    <td>@item.description</td>
+</tr>
+}
+</table>
+
+<p>@Html.ActionLink("Add", "Create", "ProjectStage")</p>

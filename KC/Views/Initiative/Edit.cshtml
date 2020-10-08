@@ -1,0 +1,1370 @@
+﻿@model KC.Models.InitiativeModel
+
+@{
+    ViewBag.Title = "Initiative";
+    ViewBag.JSPage = "initiative.js";
+}
+<!-- header with breadcrumbs -->
+<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+    <div class="kt-container ">
+        <div class="kt-subheader__main">
+            <h3 class="kt-subheader__title" id="iniTitle"></h3>
+            <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+            <div class="kt-subheader__breadcrumbs">
+                <span class="badge badge-pill" id="iniBadge" style="padding-left: 11px; padding-right: 11px"></span>
+                <span class="kt-subheader__breadcrumbs-separator" style="padding-left:15px;padding-right:15px"></span>
+                <span class="badge badge-pill badge-info" id="iniStatus" style="padding-left: 15px; padding-right: 15px"></span>
+                <span class="kt-subheader__breadcrumbs-separator" id="saveConflictPill1" style="padding-left:15px;padding-right:15px;display:none"></span>
+                <span class="badge badge-pill badge-danger" id="saveConflictPill2" style="padding-left: 15px; padding-right: 15px;display:none">Save Conflict!</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- body -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="kt-portlet kt-portlet--tabs">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-toolbar">
+                        <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-brand nav-tabs-line-2x nav-tabs-line-right nav-tabs-bold" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tab_1_content" role="tab">
+                                    <i class="flaticon-interface-1" aria-hidden="true"></i>General information
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab_2_content" role="tab">
+                                    <i class="flaticon-background" aria-hidden="true"></i>Further details
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab_3_content" role="tab">
+                                    <i class="flaticon-coins" aria-hidden="true"></i>Team and budget
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab_4_content" role="tab">
+                                    <i class="flaticon-list-1" aria-hidden="true"></i>Aspired impact
+                                </a>
+                            </li>
+                            <li class="nav-item oldDesign" id="tabDebrief" style="display:none">
+                                <a class="nav-link" data-toggle="tab" href="#tab_6_content" role="tab">
+                                    <i class="flaticon-medical" aria-hidden="true"></i>Debrief
+                                </a>
+                            </li>
+                            <li class="nav-item oldDesign" id="tabEPR" style="display:none">
+                                <a class="nav-link" data-toggle="tab" href="#tab_7_content" role="tab">
+                                    <i class="flaticon-list" aria-hidden="true"></i>EPR
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="kt-portlet__body" id="formLoading">
+                    <div class="kt-section">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <!--begin::Form-->
+                    <form class="kt-form" id="mainForm" method="post" action="initiative?OpenForm&amp;Seq=1" name="_initiative" style="display:none">
+                        <input type="hidden" name="__Click" value="0">
+                        <input type="hidden" name="type" id="type" value="">
+                        <input type="hidden" name="aid" id="aid" value="">
+                        <input type="hidden" name="status" id="status" value="">
+                        <textarea name="ProxyApprovers" id="ProxyApprovers" style="display:none"></textarea>
+                        <input type="hidden" value="" id="FTE125" name="FTE125">
+                        <input type="hidden" value="" id="BypassNotifications" name="BypassNotifications">
+                        <input type="hidden" value="" id="approvedPriority" name="approvedPriority">
+                        <input type="hidden" value="" id="externalInput" name="externalInput">
+                        <input type="hidden" value="" id="teamAndBudget" name="teamAndBudget">
+                        <input type="hidden" value="" id="saveConflictID" name="saveConflictID">
+                        <input type="hidden" value="" id="lastSavedBy" name="lastSavedBy">
+                        <input type="hidden" value="1" id="nrEEP1" name="nrEEP1">
+                        <input type="hidden" value="1" id="nrEEP2" name="nrEEP2">
+                        <input type="hidden" value="1" id="nrEEP3" name="nrEEP3">
+                        <!--begin::Tabs-->
+                        <div class="tab-content">
+                            <!--General information-->
+                            <div class="tab-pane active" id="tab_1_content" role="tabpanel">
+                                <div class="row">
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Owner *</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <select class="form-control" id="ownerid" name="ownerid" style="100%"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Department *</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <select class="form-control" id="department" name="department" style="100%"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Approver *</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <select class="form-control" id="approver" name="approver" style="100%"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Proxy approver(s)</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <span class="form-control" id="proxyapprovershow"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Others with edit access</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <select class="form-control" id="otherswithaccess" name="otherswithaccess" multiple></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">125 FTE Initiative</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                                                <label>
+                                                    <input type="checkbox" name="pkFTECHK" id="pkFTECHK" value="Yes">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Name *</label>
+                                        <div class="col-lg-8 col-md-9 col-sm-12">
+                                            <input class="form-control" type="text" value="" id="name" name="name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row">
+                                    <div class="col-sm-12 row">
+                                        <label class="col-form-label col-sm-12">Description (include envisioned impact for clients) *</label>
+                                        <div class="col-sm-12">
+                                            <textarea class="form-control" id="description" name="description" rows="7"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 row oldDesign" style="display:none">
+                                        <label class="col-form-label col-sm-12">KNOW Description</label>
+                                        <label class="col-form-label col-sm-12 obsolete-label" id="knowdescription"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row oldDesign" style="display:none">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Type of initiative planned</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="typeofkip"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row oldDesign" style="display:none">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Type of ownership</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="typeofkip_own"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row oldDesign" style="display:none">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Years, last upgrade</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="yearsupgrade"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row oldDesign" style="display:none">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Contact person</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="contactperson"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group-small row oldDesign" style="display:none">
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Service Line status</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="serviceline"></label>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Please specify</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="specificserviceline"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Start date *</label>
+                                        <div class="col-xl-4 col-lg-6 col-md-3 col-sm-12">
+                                            <input class="form-control" type="date" value="" id="startdate" name="startdate">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Projected end date *</label>
+                                        <div class="col-xl-4 col-lg-6 col-md-3 col-sm-12">
+                                            <input class="form-control" type="date" value="" id="enddate" name="enddate">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row oldDesign" style="display:none">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Study duration</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="studyduration"></label>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row oldDesign" style="display:none">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Preliminary charge code</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="preliminarychargecode"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label col-sm-12"><b>Project stages</b><br>please provide projected date of completion for each</label>
+                                    <div class="form-group-small col-sm-9 row">
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12">Develop & test *<br><small>By when do you plan to have first artifacts/MVP available? E.g., knowledge documents, MVP</small></label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <input class="form-control" type="date" value="" id="projectstage1date" name="projectstage1date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-9 row">
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12">Share internally & curate *<br><small>By when do you plan to have the first assets on KNOW/shared? E.g., Playbook or CXO deck on KNOW</small></label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <input class="form-control" type="date" value="" id="projectstage2date" name="projectstage2date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-9 row">
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12">Reach & engage clients *<br><small>By when do you plan to have the first LOP/MVP pilot with client?</small></label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <input class="form-control" type="date" value="" id="projectstage3date" name="projectstage3date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-9 row">
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12">Deliver, refine & scale *<br><small>By when do you plan to have the first client fees generated?</small></label>
+                                        <div class="col-lg-3 col-md-3 col-sm-12">
+                                            <input class="form-control" type="date" value="" id="projectstage4date" name="projectstage4date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-lg-6 col-sm-12 row" id="cdHolder">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Closed date</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12" id="closeddate"></label>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Nr of stage gate reviews</label>
+                                        <div class="col-lg-2 col-md-1 col-sm-12">
+                                            <input class="form-control" type="text" value="" id="stagegatereviews" name="stagegatereviews">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-lg-6 col-sm-12 row" id="ccHolder">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Charge code *</label>
+                                        <div class="col-xl-4 col-lg-6 col-md-3 col-sm-12">
+                                            <input class="form-control" type="text" value="" id="chargecode" name="chargecode">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">% of development investment in Gate 1</label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdev1"></label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdis1"></label>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">% of development investment in Gate 2</label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdev2"></label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdis2"></label>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">% of development investment in Gate 3</label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdev3"></label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdis3"></label>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">% of development investment in Gate 4</label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdev4"></label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdis4"></label>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">% of development investment in Gate 5</label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdev5"></label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdis5"></label>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">% of development investment in Gate 6</label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdev6"></label>
+                                    <label class="col-form-label col-lg-2 col-md-2 col-sm-12 obsolete-label" id="sgdis6"></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small team-main-row col-sm-12 row">
+                                        <div class="col-sm-12">
+                                            <label class="">* required fields</label><br>
+                                            <label class="oldDesign" style="display:none">** obsolete fields</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Further details-->
+                            <div class="tab-pane" id="tab_2_content" role="tabpanel">
+                                <div class="row">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12"><b>Classification</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-lg-12 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Functional *</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <select class="form-control" id="FunctionalTaxonomy" name="FunctionalTaxonomy" style="100%" multiple></select>
+                                            <span class="badge badge-pill badge-info" id="functionalSelectAllTop" style="margin-top:3px;cursor:pointer;">select all top level</span>
+                                            <span class="badge badge-pill badge-info" id="functionalClearAll" style="margin-left:1px;margin-top:3px;cursor:pointer;">clear</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-lg-12 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Industry *</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <select class="form-control" id="IndustryTaxonomy" name="IndustryTaxonomy" style="100%" multiple></select>
+                                            <span class="badge badge-pill badge-info" id="industrySelectAllTop" style="margin-top:3px;cursor:pointer;">select all top level</span>
+                                            <span class="badge badge-pill badge-info" id="industryClearAll" style="margin-left:1px;margin-top:3px;cursor:pointer;">clear</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-lg-12 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Growth platform</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <select class="form-control" id="GrowthPlatform" name="GrowthPlatform" style="100%" multiple></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <div class="form-group-small col-lg-12 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Taxonomy code(s)</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="taxonomy"></label>
+                                    </div>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <div class="form-group-small col-lg-12 col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Taxonomy name(s)</label>
+                                        <label class="col-form-label col-lg-8 col-md-9 col-sm-12 obsolete-label" id="taxonomyname"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12"><b>Prerequisities</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-8 col-sm-12">Approved as a priority by a practice/SL/cell committee</label>
+                                        <div class="col-lg-6 col-md-4 col-sm-12">
+                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                                                <label>
+                                                    <input type="checkbox" name="approvedPriorityCHK" id="approvedPriorityCHK" value="Yes">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row" id="rowAttach">
+                                        <label class="col-form-label col-lg-4 col-md-8 col-sm-12">Please attach the proposal/supporting document *</label>
+                                        <div class="col-lg-6 col-md-4 col-sm-12">
+                                            <iframe src="" frameborder="0" style="width:100%;height:45px" scrolling="no" id="attachFrame">
+                                            </iframe>
+                                            <div id="attList"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12"><b>External input</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-8 col-sm-12">External input taken into account in defining this initiative as a priority?</label>
+                                        <div class="col-lg-6 col-md-4 col-sm-12">
+                                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                                                <label>
+                                                    <input type="checkbox" name="externalInputCHK" id="externalInputCHK" value="Yes">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">To what extent will clients be involved in this initiative? *</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <select class="form-control" id="externalClientInvolvement" name="externalClientInvolvement" style="100%"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Please state the name of the client/clients</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <input class="form-control" type="text" value="" id="externalClientName" name="externalClientName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">To what extent will other external third parties (e.g., academia, associations) be involved in this initiative? *</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <select class="form-control" id="externalThirdPartyInvolvement" name="externalThirdPartyInvolvement" style="100%"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Please state the name of the external third party</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12">
+                                            <input class="form-control" type="text" value="" id="externalThirdPartyName" name="externalThirdPartyName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="fteProgram">
+                                    <div class="row">
+                                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12"><b>125 FTE staffing</b></label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group-small col-sm-12 row">
+                                            <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Preferred region(s)/office(s) *</label>
+                                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                                <input class="form-control" type="text" value="" id="ftePreferredRegionOffice" name="ftePreferredRegionOffice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group-small col-sm-12 row">
+                                            <label class="col-form-label col-lg-4 col-md-3 col-sm-12">125 FTE staffing need and duration *<br><small>Office CSP below AP, staffing duration in weeks</small></label>
+                                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                                <input class="form-control" type="text" value="" id="fteStaffingNeeded" name="fteStaffingNeeded">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group-small col-sm-12 row">
+                                            <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Team staffing contact *</label>
+                                            <div class="col-lg-6 col-md-9 col-sm-12">
+                                                <input class="form-control" type="text" value="" id="fteStaffingContact" name="fteStaffingContact">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group-small team-main-row col-sm-12 row">
+                                    <div class="col-sm-12">
+                                        <label class="">* required fields</label><br>
+                                        <label class="oldDesign" style="display:none">** obsolete fields</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Team and budget-->
+                            <div class="tab-pane" id="tab_3_content" role="tabpanel">
+                                <div class="row" style="display:none">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Staffing type</label>
+                                        <div class="col-lg-6 col-md-9 col-sm-12 kt-checkbox-inline">
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="staffingType" id="staffingType" value="1"> Practice resources
+                                                <span></span>
+                                            </label>
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="staffingType" id="staffingType" value="2"> Office resources
+                                                <span></span>
+                                            </label>
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="staffingType" id="staffingType" value="3"> 125 FTE
+                                                <span></span>
+                                            </label>
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="staffingType" id="staffingType" value="4"> Other (beach time, part time staffing, etc.)
+                                                <span></span>
+                                            </label>
+                                            <label class="kt-checkbox">
+                                                <input type="checkbox" name="staffingType" id="staffingType" value="5"> No staffing is needed
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label"><b>Role</b></label>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <label class="col-form-label"><b>Name</b></label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <label class="col-form-label"><b>Days</b></label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <label class="col-form-label"><b>&nbsp;Per Diem **</b></label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <label style="cursor:pointer;font-size:25px;margin:0"><i class="flaticon-notepad showPerDiem" title="See rates..."></i></label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <label class="col-form-label"><b>Total</b></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row" rowType="DCS">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">DCS / sponsor of the initiative *</label>
+                                                <label class="col-form-label col-sm-1 rowControls"></label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-cancel removeRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <select class="form-control" id="rowDCSName1" name="rowDCSName1" style="100%"></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowDCSDays1" id="rowDCSDays1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowDCSPerDiem1" name="rowDCSPerDiem1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowDCSTotal1" name="rowDCSTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row" rowType="ED">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">ED *</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addRow"></i></label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-cancel removeRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <select class="form-control" id="rowEDName1" name="rowEDName1" style="100%"></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowEDDays1" id="rowEDDays1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowEDPerDiem1" name="rowEDPerDiem1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowEDTotal1" name="rowEDTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row" rowType="CSP">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">Partners</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addRow"></i></label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-cancel removeRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowCSPName1" name="rowCSPName1" style="100%"></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowCSPDays1" id="rowCSPDays1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowCSPPerDiem1" name="rowCSPPerDiem1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowCSPTotal1" name="rowCSPTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row" rowType="AP">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">APs, Senior Experts and equivalents</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addRow"></i></label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-cancel removeRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowAPName1" name="rowAPName1" style="100%"></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowAPDays1" id="rowAPDays1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowAPPerDiem1" name="rowAPPerDiem1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowAPTotal1" name="rowAPTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row" rowType="EM">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">EMs, Experts and equivalents</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addRow"></i></label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-cancel removeRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowEMName1" name="rowEMName1" style="100%"></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowEMDays1" id="rowEMDays1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowEMPerDiem1" name="rowEMPerDiem1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowEMTotal1" name="rowEMTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row" rowType="FSP">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">Associates, Specialists and equivalents</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addRow"></i></label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-cancel removeRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowFSPName1" name="rowFSPName1" style="100%"></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowFSPDays1" id="rowFSPDays1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowFSPPerDiem1" name="rowFSPPerDiem1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowFSPTotal1" name="rowFSPTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none" rowType="OP">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">Other Partners</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowOPName1" name="rowOPName1" style="100%" disabled></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowOPDays1" id="rowOPDays1" disabled>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowOPPerDiem1" name="rowOPPerDiem1" disabled>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowOPTotal1" name="rowOPTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none" rowType="CSS">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">Other CSS</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowCSSName1" name="rowCSSName1" style="100%" disabled></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowCSSDays1" id="rowCSSDays1" disabled>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowCSSPerDiem1" name="rowCSSPerDiem1" disabled>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowCSSTotal1" name="rowCSSTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none" rowType="CSSS">
+                                        <div class="col-lg-3 col-md-3">
+                                            <div class="row">
+                                                <label class="col-form-label col-sm-10">CSSS</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 rowName">
+                                            <select class="form-control" id="rowCSSSName1" name="rowCSSSName1" style="100%" disabled></select>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <input type="text" class="form-control cellDays" name="rowCSSSDays1" id="rowCSSSDays1" disabled>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control cellPerDiem" id="rowCSSSPerDiem1" name="rowCSSSPerDiem1" disabled>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" id="rowCSSSTotal1" name="rowCSSSTotal1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row">
+                                        <div class="col-lg-7 col-md-7">
+                                            <label class="col-form-label"></label>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <label class="col-form-label"><b>Total for team</b></label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <span class="form-control" id="rowTotal1" name="rowTotal1">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label"><b>Out-of-pocket/internal charges budget</b></label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="col-form-label"><b>Development</b></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="col-form-label"><b>Dissemination</b></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label">Travel and entertainment</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDev1" id="oopBudgetDev1"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDis1" id="oopBudgetDis1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label">Purchased resources</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDev2" id="oopBudgetDev2"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDis2" id="oopBudgetDis2"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label">Outside consulting fees</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDev3" id="oopBudgetDev3"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDis3" id="oopBudgetDis3"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label">R&I, VA, or other internally billed work</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDev4" id="oopBudgetDev4"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDis4" id="oopBudgetDis4"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label" id="oopOthers1">Others, please specify</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDev5" id="oopBudgetDev5"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDis5" id="oopBudgetDis5"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label" id="oopOthers2">Others, please specify</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDev6" id="oopBudgetDev6"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="oopBudgetDis6" id="oopBudgetDis6"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-5 col-md-5">
+                                            <label class="col-form-label"><b>Planning of recoveries</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-5 col-md-5">
+                                            <label class="col-form-label">Description of recovery model</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="descrecovery" id="descrecovery"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-5 col-md-5">
+                                            <label class="col-form-label">How many applications in client engagements are planned per year?</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="clientdiscuss" id="clientdiscuss"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-5 col-md-5">
+                                            <label class="col-form-label">How many new client engagements will be enabled through this asset per year?</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="clientengcount" id="clientengcount"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-5 col-md-5">
+                                            <label class="col-form-label">Range of recovery fees (USD)</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="rangerecovery" id="rangerecovery"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-5 col-md-5">
+                                            <label class="col-form-label">Targeted break even of investments (months)</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <span class="form-control" name="targetbreakeven" id="targetbreakeven"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label">Planned out of pocket expenses */**</label>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+                                            <input type="text" class="form-control" name="rowPocketExpenses" id="rowPocketExpenses">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2">
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4">
+                                            <label class="col-form-label"><b>Grand total (including expenses)</b></label>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1">
+                                            <span class="form-control" id="rowTotal2" name="rowTotal2">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row oldDesign" style="display:none">
+                                        <div class="col-lg-3 col-md-3">
+                                            <label class="col-form-label" id="oopOthers2">Other practices sharing these expenses</label>
+                                        </div>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="sharingexpenses"></label>
+                                    </div>
+                                    <div class="form-group-small team-main-row col-sm-12 row">
+                                        <div class="col-sm-12">
+                                            <label class="">* required fields</label><br>
+                                            <label class="" id="currencyLabel">** all values are in USD</label><br>
+                                            <label class="oldDesign" style="display:none">*** obsolete fields</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Impact-->
+                            <div class="tab-pane" id="tab_4_content" role="tabpanel">
+                                <div class="row">
+                                    <label class="col-form-label col-sm-12"><b>Envisioned end products</b><br><small>please list planned deliverables and provide projected date of completion for each</small></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row eep-main-row" rowType="1">
+                                        <div class="col-lg-4 col-md-3 col-sm-12">
+                                            <div class="row">
+                                                <label class="col-sm-11">Client discussion & study support materials (e.g., CXO deck, proposal doc, EM guide, recipe, video, capability building module)</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addImpactRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-7 col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Description of end product" name="impactEEPDes1_1" id="impactEEPDes1_1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <input type="date" class="form-control" value="" name="impactEEPDate1_1" id="impactEEPDate1_1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row eep-main-row" rowType="2">
+                                        <div class="col-lg-4 col-md-3 col-sm-12">
+                                            <div class="row">
+                                                <label class="col-sm-11">Client delivery assets (e.g., tech-enabled assets/solutions, tools, algorithms, benchmarks, data assets)</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addImpactRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-7 col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Description of end product" name="impactEEPDes2_1" id="impactEEPDes2_1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <input type="date" class="form-control" value="" name="impactEEPDate2_1" id="impactEEPDate2_1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row eep-main-row" rowType="3">
+                                        <div class="col-lg-4 col-md-3 col-sm-12">
+                                            <div class="row">
+                                                <label class="col-sm-11">Reach & Relevance activity (e.g., publications, speeches, CXO round-tables)</label>
+                                                <label class="col-form-label col-sm-1 rowControls"><i class="flaticon-plus addImpactRow"></i></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-7 col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Description of end product" name="impactEEPDes3_1" id="impactEEPDes3_1">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <input type="date" class="form-control" value="" name="impactEEPDate3_1" id="impactEEPDate3_1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row eep-main-row" rowType="4">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label col-sm-12"><b>Client engagement</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Planned # of client discussions</label>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Number" name="impactCDNr" id="impactCDNr">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Aspired # of LOPs</label>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Number" name="impactLOPNr" id="impactLOPNr">
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Aspired # of engagements</label>
+                                        <div class="col-lg-2 col-md-2 col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Number" name="impactENGNr" id="impactENGNr">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12"><b>Old impact info</b></label>
+                                </div>
+                                <div class="row oldDesign" style="display:none">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Key objectives</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactkeyobjectives"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Applicability of Insights</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactapplicability"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Planned Client Dissemination</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactclientdiscussions"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Planned End Product</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactplannedendproduct"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">PK Asset Development</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactassetdevelopment"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Client impact</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactclient"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Internal impact</label>
+                                        <label class="col-form-label col-lg-9 col-md-9 col-sm-12 obsolete-label" id="impactinternal"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Debrief-->
+                            <div class="tab-pane" id="tab_6_content" role="tabpanel">
+                                <div class="row">
+                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12"><b>Debrief</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Exclude from scorecard</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="excsco"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Team Debriefed</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="teamdebriefed"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Date of Debrief</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="debriefdate"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label"><b>1. How was the KI theme and scope determined?</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">How was the likely relevance of the KI topic for clients and CSTs assessed?</label>
+                                        <label class="col-lg-4 col-md-4 col-sm-12 obsolete-label" id="kiptopic"></label>
+                                        <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="kiptopic_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">To what extent was client input sought in scoping/executing the project?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="clientinv"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">If so how?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="clientinvfree"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">To what extent was other external input (i.e. academic partnership or thorough literature review) sought in scoping/executing the project?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="externalexpertinv"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">If so how?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="externalexpert"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label"><b>2. How was the KI monitored?</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Was the project guided by a Steering committee?</label>
+                                        <label class="col-lg-4 col-md-4 col-sm-12 obsolete-label" id="steeringcomminv"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">If so, who were the members?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="scmembers"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">How effective was the steering committee in guiding and supporting the KI?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="leadershipengrating"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Was other internal or external review sought informally? If so, from whom?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="revsought_1"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label"><b>3. What has been the impact of the team's work since the completion of the project?</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">What knowlege has been codified to date? What is planned?</label>
+                                        <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="endprojects_1"></label>
+                                        <label class="col-lg-4 col-md-4 col-sm-12 obsolete-label" id="planned_1_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">What does the dissemination strategy look like? Please describe what is planned.</label>
+                                        <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="focus_1"></label>
+                                        <label class="col-lg-4 col-md-4 col-sm-12 obsolete-label" id="elements_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">At how many and which McKinsey led conferences/round-tables have the results from this KI been presented?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="conferences_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="conferences_2"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">At how many and which major externally sponsored events have the results from this KI been presented?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="sponsor_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="sponsor_2"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">In how many and which external publications have results from this KI been published?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="extpublications_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="extpublications_2"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">In how many and which publications have the results of this KI been quoted?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="publications_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="publications_2"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">How many and which discussions based on the KI materials have already been led with clients/clientele?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="discussions_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="comments_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">To which proposals has the KI made substantial contributions?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="client_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">How many engagements has this KI supported?</label>
+                                        <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="support_1"></label>
+                                        <label class="col-lg-4 col-md-4 col-sm-12 obsolete-label" id="engagments"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Was the knowledge developed as part of the KI instrumental in winning engagements (i.e. would not have won the engagement without it)?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="client_4"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Has the KI already been successfully tested and validated for impact at a client / a priority client of the firm?</label>
+                                        <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact_1"></label>
+                                        <label class="col-lg-4 col-md-4 col-sm-12 obsolete-label" id="impact_2"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Reference case</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="references"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label"><b>4. Have we built a broad and substainable capability around the topic?</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">How many practitioners do we have with deep knowledge on the subject?</label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="partner_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="nonpartner_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Has the acquired knowledge been translated into an explicit capability builiding approach for our CSS and our clients?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="capability_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Have we built proprietary tools or databases?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="tools_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="databases_1"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">To which extent has this KI contributed to the development of proprietary tools and databases?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="proprietary_tools"></label>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">If so, which and how will they be managed going forward?</label>
+                                        <label class="col-lg-1 col-md-1 col-sm-12 obsolete-label" id="proprietary_1"></label>
+                                        <label class="col-lg-3 col-md-3 col-sm-12 obsolete-label" id="proprietary_2"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label"><b>5. Would you say that this project was a success? If so, why? If not, what do you think should have been done differently?</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Would you say that this project was a success? If so, why? If not, what do you think should have been done differently?</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="success_1"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-form-label"><b>6. Was there anything important about this project that has not been mentioned and that could be valuable to other KI teams within the Firm?  (e.g., particular set-up, special features of development process, new dissemination or impact assessment techniques)</b></label>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-sm-12 obsolete-label" id="valuable_1"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Relevance to clients/CSTs</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="relevance_cst"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Effect on client performance</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="client_performance"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Distinctiveness of KI insightness and output</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="distinct_insight"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Codification of output</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="codification"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Capability building</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="capability"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">Overall</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="overall"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--EPR-->
+                            <div class="tab-pane" id="tab_7_content" role="tabpanel">
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-6 col-md-6 col-sm-12">For first 3 criteria</label>
+                                        <label class="col-lg-6 col-md-6 col-sm-12 obsolete-label" id="eprcriteria"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12"></label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12">Just Launched</label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12">Mid Point</label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12">Recently Completed</label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12">Impact after 6 Months</label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12">Impact after 12 Months</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12">Evidence of relevance to clients/CSTs</label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="justlaunched1"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="midpoint1"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="recentlycompleted1"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact1"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="afterimpact1"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12">Effect on client performance</label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="justlaunched2"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="midpoint2"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="recentlycompleted2"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact2"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="afterimpact2"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12">Distinctiveness of KI insights and output</label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="justlaunched3"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="midpoint3"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="recentlycompleted3"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact3"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="afterimpact3"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12">Codification of output</label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="justlaunched4"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="midpoint4"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="recentlycompleted4"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact4"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="afterimpact4"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12">Building of capability to support clients/CSTs</label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="justlaunched5"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="midpoint5"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="recentlycompleted5"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact5"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="afterimpact5"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group-small col-sm-12 row">
+                                        <label class="col-lg-2 col-md-4 col-sm-12">Team experience</label>
+                                        <div class="col-lg-10 col-md-8 col-sm-12">
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="justlaunched6"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="midpoint6"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="recentlycompleted6"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="impact6"></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-12 obsolete-label" id="afterimpact6"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Tabs-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <div class="kt-portlet__foot" style="padding-top: 7px">
+                    <div class="col-lg-6 col-sm-12 row" id="adminBypassNotifications" style="display:none">
+                        <label class="col-form-label col-lg-4 col-md-3 col-sm-12" style="padding-left: 2px; padding-bottom: 5px">Bypass notifications</label>
+                        <div class="col-lg-8 col-md-9 col-sm-12">
+                            <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--success">
+                                <label>
+                                    <input type="checkbox" name="BypassNotificationsCHK" id="BypassNotificationsCHK" value="Yes">
+                                    <span></span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-form__actions">
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnSave">Save</button>
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnSubmitForApproval">Submit for approval</button>
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnBackToSubmitter">Back to submitter</button>
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnApprove">Approve</button>
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnSetChargeCode">Set charge code</button>
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnClose">Close initiative</button>
+                        <button type="button" class="btn btn-primary" style="display:none" id="btnReopen">Reopen initiative</button>
+                        <button type="button" class="btn btn-secondary" style="display:none" id="btnBackToDraft">Back to draft</button>
+                        <button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Modal for save conflict -->
+                <div class="modal fade" id="modalSaveConflict" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Save conflict</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Someone else (<span id="modalLastModifiedBy"></span>) has modified this initiative while you were editing it. Please reload the initiative to be sure you are editing the latest version.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-brand" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="modalReloadPage">Reload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for mandatory fields -->
+                <div class="modal fade" id="modalMissingFields" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Missing fields</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>The following fields need to be completed<br><span id="modalMissingFieldsList"></span></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-brand" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal for per diem rates -->
+                <div class="modal fade" id="modalPerDiemRates" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Per Diem Rates</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="ratesBody"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-brand" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- validation -->
+    @if (!ViewBag.isValid)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Validation errors</h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                @Html.ValidationSummary(false, "Please address the following errors on page:", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

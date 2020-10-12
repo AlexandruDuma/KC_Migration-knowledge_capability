@@ -49,5 +49,8 @@ namespace DataModel.Repository
         public virtual DbSet<owner_department> owner_department { get; set; }
         public virtual DbSet<proxy_approver> proxy_approver { get; set; }
         public virtual DbSet<owner> owners { get; set; }
+        public virtual DbSet<initiative> initiatives { get; set; }
+        public virtual DbSet<initiative_staffing> initiative_staffing { get; set; }
+        public virtual DbSet<initiative_type_staffing> initiative_type_staffing { get; set; }
     }
 }

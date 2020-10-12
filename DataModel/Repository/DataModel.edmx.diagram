@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4e30885101f44d939adc4fcccd89ef46" Name="Diagram1">
+      <Diagram DiagramId="4e30885101f44d939adc4fcccd89ef46" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="KandCModel.taxonomy" Width="1.5" PointX="13.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KandCModel.project_stage" Width="1.5" PointX="10.375" PointY="2.75" />
         <EntityTypeShape EntityType="KandCModel.client_involvement" Width="1.5" PointX="12" PointY="0.5" />
@@ -42,6 +42,17 @@
         <AssociationConnector Association="KandCModel.FK_owner_contact_owner" />
         <AssociationConnector Association="KandCModel.FK_owner_department_owner" />
         <AssociationConnector Association="KandCModel.FK_owner_owner1" />
+        <EntityTypeShape EntityType="KandCModel.initiative" Width="1.5" PointX="9.5" PointY="6.75" />
+        <EntityTypeShape EntityType="KandCModel.initiative_staffing" Width="1.5" PointX="16" PointY="6.25" />
+        <EntityTypeShape EntityType="KandCModel.initiative_type_staffing" Width="1.5" PointX="16" PointY="3" />
+        <AssociationConnector Association="KandCModel.FK_initiative_initiative_type" />
+        <AssociationConnector Association="KandCModel.FK_initiative_owner" />
+        <AssociationConnector Association="KandCModel.FK_initiative_owner_approver" />
+        <AssociationConnector Association="KandCModel.FK_initiative_owner_department" />
+        <AssociationConnector Association="KandCModel.FK_initiative_staffing_initiative" />
+        <AssociationConnector Association="KandCModel.FK_initiative_staffing_staffing" />
+        <AssociationConnector Association="KandCModel.FK_initiative_type_staffing_initiative_type" />
+        <AssociationConnector Association="KandCModel.FK_initiative_type_staffing_staffing" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

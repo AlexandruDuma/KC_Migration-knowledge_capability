@@ -25,6 +25,7 @@ namespace KC.Controllers
                     model.display_order = obj.display_order;
                     model.name = obj.name;
                     model.description = obj.description;
+                    model.initiativeTypeOptions = context.initiative_type.Where(a => a.allow_creation).ToList();
                 }
             }
             return View(model);

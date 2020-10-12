@@ -14,11 +14,19 @@ namespace DataModel.Repository
     
     public partial class owner_approver
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public owner_approver()
+        {
+            this.initiatives = new HashSet<initiative>();
+        }
+    
         public int owner_approver_id { get; set; }
         public int owner_id { get; set; }
         public int approver_id { get; set; }
     
         public virtual approver approver { get; set; }
         public virtual owner owner { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<initiative> initiatives { get; set; }
     }
 }

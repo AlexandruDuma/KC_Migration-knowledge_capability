@@ -181,11 +181,13 @@ namespace CommonObjects
                                     context.engageterms.Add(NewEngageTerm(narrowMatch, "Functional//" + et.label + "//" + narrowMatch["prefLabel"].ToString()));
                                     js++;
                                 }
+                                /*
                                 foreach (JObject exactMatch in term["exactMatch"])
                                 {
                                     context.engageterms.Add(NewEngageTerm(exactMatch, "Functional//" + et.label + "//" + exactMatch["prefLabel"].ToString()));
                                     js++;
                                 }
+                                */
                             }
                             else
                             {
@@ -200,11 +202,13 @@ namespace CommonObjects
                                         context.engageterms.Add(NewEngageTerm(narrowMatch, "Functional//" + parentLabel.ToString() + "//" + et.label + "//" + narrowMatch["prefLabel"].ToString()));
                                         js++;
                                     }
+                                    /*
                                     foreach (JObject exactMatch in term["exactMatch"])
                                     {
                                         context.engageterms.Add(NewEngageTerm(exactMatch, "Functional//" + parentLabel.ToString() + "//" + et.label + "//" + exactMatch["prefLabel"].ToString()));
                                         js++;
                                     }
+                                    */
                                 }
                             }
                         }
@@ -227,10 +231,10 @@ namespace CommonObjects
             engageterm et = new engageterm
             {
                 class_code = Int32.Parse(term["classCode"].ToString()),
-                label = term["prefLabel"].ToString(),
+                label = term["prefLabel"].ToString().Replace("Core Technology", "McKinsey Technology"),
                 selectable = term["selectable"][0].ToString() == "true",
-                category = term["category"]==null?"":term["category"][0].ToString(),
-                magic_tree = mt
+                category = term["category"] == null ? "" : term["category"][0].ToString(),
+                magic_tree = mt.Replace("Core Technology", "McKinsey Technology")
             };
 
             return et;

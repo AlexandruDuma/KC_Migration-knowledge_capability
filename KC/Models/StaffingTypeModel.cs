@@ -26,5 +26,7 @@ namespace KC.Models
         [StringLength(500, ErrorMessage = "Description length cannot exceed 500 characters.")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.Text)]
         public string description { get; set; }
+
+        public List<initiative_type> initiativeTypeOptions { get; set; }
     }
 }

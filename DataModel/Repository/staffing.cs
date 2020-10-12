@@ -14,9 +14,21 @@ namespace DataModel.Repository
     
     public partial class staffing
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public staffing()
+        {
+            this.initiative_staffing = new HashSet<initiative_staffing>();
+            this.initiative_type_staffing = new HashSet<initiative_type_staffing>();
+        }
+    
         public int staffing_id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public int display_order { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<initiative_staffing> initiative_staffing { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<initiative_type_staffing> initiative_type_staffing { get; set; }
     }
 }

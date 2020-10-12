@@ -54,6 +54,9 @@ $(".menuItem").click(function ()
                 $(".menuItem").removeClass('selected');
                 $(this).addClass('selected')
 
+                if ((dataType == 'ontology.flat') || (dataType == 'ontology.tree')) $('#semanticInfo').show()
+                else $('#semanticInfo').hide()
+
                 if (dataType == 'engage.terms') loadDataET()
                 else showTable()
             }
@@ -84,13 +87,13 @@ function showTableET()
 
     html = '';
     html += '<table style="width:100%">';
-    html += '<tr class="rowHeader"><td><b>Term</b></td><td><b>Selectable</b></td><td><b>Code</b></td><td><b>Path</b></td></tr>';
+    html += '<tr class="rowHeader"><td><b>Term</b></td><td><b>Selectable</b></td><td><b>Path</b></td></tr>';
     n = 0;
     nr = 0;
     oldCate = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
     $.each(myDataET, function (i, obj)
     {
-        if (filterAppliesET(obj))
+        if (filterApplies(obj))
         {
             nr++;
             tree = this.magic_tree;
@@ -99,17 +102,17 @@ function showTableET()
             for (nc = 0; nc <= tree.length - 2; nc++)
             {
                 if (oldCate[nc] != tree[nc]) {
-                    n++;
-                    html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + '">';
-                    html += '<td colspan="4" style="padding-left:' + (5 + nc * 25) + 'px;"><b>' + tree[nc] + '</b></td>';
-                    html += '</tr>';
+                    //n++;
+                    //html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + '">';
+                    //html += '<td colspan="3" style="padding-left:' + (5 + nc * 25) + 'px;"><b>' + tree[nc] + '</b></td>';
+                    //html += '</tr>';
                     oldCate[nc] = tree[nc]
                 }
             }
 
             n++;
             html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + '">';
-            html += '<td style="padding-left:' + (15 + (tree.length - 2) * 25) + 'px;">' + this.label + '</td><td>' + (this.selectable ? 'Yes' : 'No') + '</td><td>' + this.class_code + '</td><td>' + this.magic_tree + '</td>';
+            html += '<td style="padding-left:' + (15 + (tree.length - 2) * 25) + 'px;">' + this.label + '</td><td>' + (this.selectable ? 'Yes' : 'No') + '</td><td>' + this.magic_tree + '</td>';
             html += '</tr>';
         }
         $("#searchInfo").html(nr + ' results');
@@ -129,7 +132,7 @@ function showTable()
     html += '<table style="width:100%">';
     if ((dataType == 'taxonomy.flat') || (dataType == 'ontology.flat'))
     {
-        html += '<tr class="rowHeader"><td style="width: 60px"><b>Id</b></td><td style="width: 150px"><b>Path</b></td><td style="width: 250px"><b>Taxonomy&nbsp;Term</b></td><td><b>Definition</b></td></tr>';
+        html += '<tr class="rowHeader"><td style="width: 200px"><b>Path</b></td><td style="width: 250px"><b>Taxonomy&nbsp;Term</b></td><td><b>Definition</b></td></tr>';
         n = 0;
         $.each(myData, function (i, obj)
         {
@@ -148,14 +151,14 @@ function showTable()
             {
                 n++;
                 if (this.definition == null) this.definition = '';
-                html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + ' ' + (!this.is_practice ? "rowItalic" : "") + '"><td>' + this.taxonomy_id + '</td><td>' + this.magic_tree + '</td><td>' + this.text + '</td><td>' + this.definition + '</td></tr>';
+                html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + ' ' + (!this.is_practice ? "rowItalic" : "") + '"><td>' + this.magic_tree.replace('Taxonomy Root//','') + '</td><td>' + this.text + '</td><td>' + this.definition + '</td></tr>';
             }
         });
         $("#searchInfo").html(n + ' results');
     }
     if ((dataType == 'taxonomy.tree') || (dataType == 'ontology.tree'))
     {
-        html += '<tr class="rowHeader"><td style="width: 60px"><b>Parent&nbsp;Id</b></td><td style="width: 60px"><b>Term&nbsp;Id</b></td><td style="width: 250px"><b>Taxonomy&nbsp;Term</b></td><td><b>Definition</b></td></tr>';
+        html += '<tr class="rowHeader"><td style="width: 300px"><b>Taxonomy&nbsp;Term</b></td><td><b>Definition</b></td></tr>';
         n = 0;
         nr = 0;
         oldCate = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
@@ -168,22 +171,28 @@ function showTable()
                 tree = this.magic_tree;
                 tree = tree.split('//');
                 
-                for (nc = 0; nc <= tree.length - 2; nc++)
+                for (nc = 1; nc <= tree.length - 2; nc++)
                 {
                     if (oldCate[nc] != tree[nc])
-                    {
-                        n++;
-                        html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + '">';
-                        html += '<td colspan="4" style="padding-left:' + (5 + nc * 25) + 'px;"><b>' + tree[nc] + '</b></td>';
-                        html += '</tr>';
+                    {                        
+                        if (nc==1)
+                        {
+                            n++;
+                            html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + '">';
+                            html += '<td colspan="2" style="padding-left:' + (5 + (nc - 1) * 25) + 'px;"><b>' + tree[nc] + '</b></td>';
+                            html += '</tr>';
+                        }
                         oldCate[nc] = tree[nc]
                     }
                 }
 
-                n++;
-                html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + ' ' + (!this.is_practice ? "rowItalic" : "") + '">';
-                html += '<td colspan="4" style="padding-left:' + (15 + (tree.length - 2) * 25) + 'px;"><table><tr><td style="width:50px">' + this.parent_taxonomy_id + '</td><td style="width:50px">' + this.taxonomy_id + '</td><td style="width:200px">' + this.text + '</td><td>' + this.definition + '</td></tr></table></td>';
-                html += '</tr>';
+                if (this.parent_taxonomy_id != null)
+                { 
+                    n++;
+                    html += '<tr class="row' + (n % 2 == 0 ? 'Even' : 'Odd') + ' ' + (!this.is_practice ? "rowItalic" : "") + '">';
+                    html += '<td colspan="2" style="padding-left:' + (15 + (tree.length - 3) * 25) + 'px;"><table><tr><td style="width:250px">' + this.text + '</td><td>' + this.definition + '</td></tr></table></td>';
+                    html += '</tr>';
+                }
             }
             $("#searchInfo").html(nr + ' results');
         });
@@ -201,34 +210,35 @@ function filterApplies(obj)
         if (obj.is_practice != 1) return false
     }
 
-    /*
-    var tmpFilterWords = [];
-    $.each(filterWords, function (i, word) { tmpFilterWords.push(word) });
-    if ($("#searchBox").val() != '')
-    {
-        txt = obj.text.toLowerCase() + ' ' + obj.definition.toLowerCase();
-        lstWords = txt.split(' ');
-        $.each(lstWords, function (i, word)
-        {
-            var i = tmpFilterWords.indexOf(word);
-            if (i !== -1) tmpFilterWords.splice(i, 1);
-        })
-        return (tmpFilterWords.length == 0 ? true : false)
-    }
-    else return true
-    */
-
     var wordsFound = 0;
     if ($("#searchBox").val() != '')
     {
-        var txt = obj.text + ' ' + obj.definition;
+        var txt = '';
+        if (dataType != 'engage.terms') txt = obj.text + ' ' + obj.definition;
+        else txt = obj.label.toLowerCase();
+
         txt = txt.split(',').join(' ');
         txt = txt.split('.').join(' ');
         txt = txt.split(';').join(' ');
         txt = txt.split(':').join(' ');
         txt = txt.split('(').join(' ');
         txt = txt.split(')').join(' ');
+        txt = txt.split('&').join(' ');
+        txt = txt.split('#').join(' ');
+        txt = txt.split('$').join(' ');
+        txt = txt.split('!').join(' ');
+        txt = txt.split('"').join(' ');
+        txt = txt.split('@').join(' ');
+        txt = txt.split('%').join(' ');
+        txt = txt.split('*').join(' ');
+        txt = txt.split('[').join(' ');
+        txt = txt.split(']').join(' ');
+        txt = txt.split('?').join(' ');
+        txt = txt.split('<').join(' ');
+        txt = txt.split('>').join(' ');
+
         txt = txt.replace(/\s\s+/g, ' ');
+        
         $.each(filterWords, function (i, word)
         {
             if (word.slice(-1) == '*') myReg = new RegExp("\\b(" + word.toLowerCase() + "\\w*)\\b", "i");
@@ -238,24 +248,6 @@ function filterApplies(obj)
             if (myMatch != null) wordsFound++;
         })
         return (filterWords.length == wordsFound ? true : false)
-    }
-    else return true
-}
-
-function filterAppliesET(obj)
-{
-    var tmpFilterWords = [];
-    $.each(filterWords, function (i, word) { tmpFilterWords.push(word) });
-    if ($("#searchBox").val() != '')
-    {
-        txt = obj.label.toLowerCase();
-        lstWords = txt.split(' ');
-        $.each(lstWords, function (i, word)
-        {
-            var i = tmpFilterWords.indexOf(word);
-            if (i !== -1) tmpFilterWords.splice(i, 1);
-        })
-        return (tmpFilterWords.length == 0 ? true : false)
     }
     else return true
 }

@@ -12,21 +12,27 @@ namespace DataModel.Repository
     using System;
     using System.Collections.Generic;
     
-    public partial class owner_department
+    public partial class initiative
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public owner_department()
+        public initiative()
         {
-            this.initiatives = new HashSet<initiative>();
+            this.initiative_staffing = new HashSet<initiative_staffing>();
         }
     
-        public int owner_department_id { get; set; }
+        public int initiative_id { get; set; }
+        public int initiative_type_id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
         public int owner_id { get; set; }
-        public int department_id { get; set; }
+        public int owner_department_id { get; set; }
+        public int owner_approver_id { get; set; }
     
-        public virtual department department { get; set; }
+        public virtual initiative_type initiative_type { get; set; }
         public virtual owner owner { get; set; }
+        public virtual owner_approver owner_approver { get; set; }
+        public virtual owner_department owner_department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<initiative> initiatives { get; set; }
+        public virtual ICollection<initiative_staffing> initiative_staffing { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace DataModel.Repository
             this.owner_contact = new HashSet<owner_contact>();
             this.owner_department = new HashSet<owner_department>();
             this.owner1 = new HashSet<owner>();
+            this.initiatives = new HashSet<initiative>();
         }
     
         public int owner_id { get; set; }
@@ -36,5 +37,7 @@ namespace DataModel.Repository
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<owner> owner1 { get; set; }
         public virtual owner owner2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<initiative> initiatives { get; set; }
     }
 }

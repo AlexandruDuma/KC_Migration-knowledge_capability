@@ -18,6 +18,8 @@ namespace DataModel.Repository
         public initiative_type()
         {
             this.notifications = new HashSet<notification>();
+            this.initiatives = new HashSet<initiative>();
+            this.initiative_type_staffing = new HashSet<initiative_type_staffing>();
         }
     
         public int initiative_type_id { get; set; }
@@ -30,5 +32,9 @@ namespace DataModel.Repository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<notification> notifications { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<initiative> initiatives { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<initiative_type_staffing> initiative_type_staffing { get; set; }
     }
 }

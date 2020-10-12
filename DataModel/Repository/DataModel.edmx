@@ -64,6 +64,26 @@
           <Property Name="display_order" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
+        <EntityType Name="initiative">
+          <Key>
+            <PropertyRef Name="initiative_id" />
+          </Key>
+          <Property Name="initiative_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="initiative_type_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" Nullable="false" />
+          <Property Name="owner_id" Type="int" Nullable="false" />
+          <Property Name="owner_department_id" Type="int" Nullable="false" />
+          <Property Name="owner_approver_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="initiative_staffing">
+          <Key>
+            <PropertyRef Name="initiative_staffing_id" />
+          </Key>
+          <Property Name="initiative_staffing_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="initiative_id" Type="int" Nullable="false" />
+          <Property Name="staffing_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="initiative_type">
           <Key>
             <PropertyRef Name="initiative_type_id" />
@@ -75,6 +95,14 @@
           <Property Name="description" Type="varchar(max)" />
           <Property Name="allow_creation" Type="bit" Nullable="false" />
           <Property Name="display_color_class" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="initiative_type_staffing">
+          <Key>
+            <PropertyRef Name="initiative_type_staffing_id" />
+          </Key>
+          <Property Name="initiative_type_staffing_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="initiative_type_id" Type="int" Nullable="false" />
+          <Property Name="staffing_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="notification">
           <Key>
@@ -224,6 +252,102 @@
           <Property Name="can_multiple" Type="bit" Nullable="false" />
           <Property Name="mandatory" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_initiative_initiative_type">
+          <End Role="initiative_type" Type="Self.initiative_type" Multiplicity="1" />
+          <End Role="initiative" Type="Self.initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative_type">
+              <PropertyRef Name="initiative_type_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="initiative_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_owner">
+          <End Role="owner" Type="Self.owner" Multiplicity="1" />
+          <End Role="initiative" Type="Self.initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_owner_approver">
+          <End Role="owner_approver" Type="Self.owner_approver" Multiplicity="1" />
+          <End Role="initiative" Type="Self.initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner_approver">
+              <PropertyRef Name="owner_approver_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="owner_approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_owner_department">
+          <End Role="owner_department" Type="Self.owner_department" Multiplicity="1" />
+          <End Role="initiative" Type="Self.initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner_department">
+              <PropertyRef Name="owner_department_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="owner_department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_staffing_initiative">
+          <End Role="initiative" Type="Self.initiative" Multiplicity="1" />
+          <End Role="initiative_staffing" Type="Self.initiative_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative">
+              <PropertyRef Name="initiative_id" />
+            </Principal>
+            <Dependent Role="initiative_staffing">
+              <PropertyRef Name="initiative_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_staffing_staffing">
+          <End Role="staffing" Type="Self.staffing" Multiplicity="1" />
+          <End Role="initiative_staffing" Type="Self.initiative_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffing">
+              <PropertyRef Name="staffing_id" />
+            </Principal>
+            <Dependent Role="initiative_staffing">
+              <PropertyRef Name="staffing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_type_staffing_initiative_type">
+          <End Role="initiative_type" Type="Self.initiative_type" Multiplicity="1" />
+          <End Role="initiative_type_staffing" Type="Self.initiative_type_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative_type">
+              <PropertyRef Name="initiative_type_id" />
+            </Principal>
+            <Dependent Role="initiative_type_staffing">
+              <PropertyRef Name="initiative_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_type_staffing_staffing">
+          <End Role="staffing" Type="Self.staffing" Multiplicity="1" />
+          <End Role="initiative_type_staffing" Type="Self.initiative_type_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffing">
+              <PropertyRef Name="staffing_id" />
+            </Principal>
+            <Dependent Role="initiative_type_staffing">
+              <PropertyRef Name="staffing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_notification_initiative_type">
           <End Role="initiative_type" Type="Self.initiative_type" Multiplicity="1" />
           <End Role="notification" Type="Self.notification" Multiplicity="*" />
@@ -388,7 +512,10 @@
           <EntitySet Name="end_product" EntityType="Self.end_product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="engageterm" EntityType="Self.engageterm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="external_3rd_party" EntityType="Self.external_3rd_party" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="initiative" EntityType="Self.initiative" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="initiative_staffing" EntityType="Self.initiative_staffing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="initiative_type" EntityType="Self.initiative_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="initiative_type_staffing" EntityType="Self.initiative_type_staffing" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="notification" EntityType="Self.notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="notification_recipient" EntityType="Self.notification_recipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="notification_replyto" EntityType="Self.notification_replyto" Schema="dbo" store:Type="Tables" />
@@ -405,6 +532,38 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taxonomy" EntityType="Self.taxonomy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="team_role" EntityType="Self.team_role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_initiative_initiative_type" Association="Self.FK_initiative_initiative_type">
+            <End Role="initiative_type" EntitySet="initiative_type" />
+            <End Role="initiative" EntitySet="initiative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_owner" Association="Self.FK_initiative_owner">
+            <End Role="owner" EntitySet="owner" />
+            <End Role="initiative" EntitySet="initiative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_owner_approver" Association="Self.FK_initiative_owner_approver">
+            <End Role="owner_approver" EntitySet="owner_approver" />
+            <End Role="initiative" EntitySet="initiative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_owner_department" Association="Self.FK_initiative_owner_department">
+            <End Role="owner_department" EntitySet="owner_department" />
+            <End Role="initiative" EntitySet="initiative" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_staffing_initiative" Association="Self.FK_initiative_staffing_initiative">
+            <End Role="initiative" EntitySet="initiative" />
+            <End Role="initiative_staffing" EntitySet="initiative_staffing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_staffing_staffing" Association="Self.FK_initiative_staffing_staffing">
+            <End Role="staffing" EntitySet="staffing" />
+            <End Role="initiative_staffing" EntitySet="initiative_staffing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_type_staffing_initiative_type" Association="Self.FK_initiative_type_staffing_initiative_type">
+            <End Role="initiative_type" EntitySet="initiative_type" />
+            <End Role="initiative_type_staffing" EntitySet="initiative_type_staffing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_type_staffing_staffing" Association="Self.FK_initiative_type_staffing_staffing">
+            <End Role="staffing" EntitySet="staffing" />
+            <End Role="initiative_type_staffing" EntitySet="initiative_type_staffing" />
+          </AssociationSet>
           <AssociationSet Name="FK_notification_initiative_type" Association="Self.FK_notification_initiative_type">
             <End Role="initiative_type" EntitySet="initiative_type" />
             <End Role="notification" EntitySet="notification" />
@@ -553,6 +712,41 @@
             <End Role="owner" EntitySet="owners" />
             <End Role="owner1" EntitySet="owners" />
           </AssociationSet>
+          <EntitySet Name="initiatives" EntityType="KandCModel.initiative" />
+          <EntitySet Name="initiative_staffing" EntityType="KandCModel.initiative_staffing" />
+          <EntitySet Name="initiative_type_staffing" EntityType="KandCModel.initiative_type_staffing" />
+          <AssociationSet Name="FK_initiative_initiative_type" Association="KandCModel.FK_initiative_initiative_type">
+            <End Role="initiative_type" EntitySet="initiative_type" />
+            <End Role="initiative" EntitySet="initiatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_owner" Association="KandCModel.FK_initiative_owner">
+            <End Role="owner" EntitySet="owners" />
+            <End Role="initiative" EntitySet="initiatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_owner_approver" Association="KandCModel.FK_initiative_owner_approver">
+            <End Role="owner_approver" EntitySet="owner_approver" />
+            <End Role="initiative" EntitySet="initiatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_owner_department" Association="KandCModel.FK_initiative_owner_department">
+            <End Role="owner_department" EntitySet="owner_department" />
+            <End Role="initiative" EntitySet="initiatives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_staffing_initiative" Association="KandCModel.FK_initiative_staffing_initiative">
+            <End Role="initiative" EntitySet="initiatives" />
+            <End Role="initiative_staffing" EntitySet="initiative_staffing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_staffing_staffing" Association="KandCModel.FK_initiative_staffing_staffing">
+            <End Role="staffing" EntitySet="staffings" />
+            <End Role="initiative_staffing" EntitySet="initiative_staffing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_type_staffing_initiative_type" Association="KandCModel.FK_initiative_type_staffing_initiative_type">
+            <End Role="initiative_type" EntitySet="initiative_type" />
+            <End Role="initiative_type_staffing" EntitySet="initiative_type_staffing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_initiative_type_staffing_staffing" Association="KandCModel.FK_initiative_type_staffing_staffing">
+            <End Role="staffing" EntitySet="staffings" />
+            <End Role="initiative_type_staffing" EntitySet="initiative_type_staffing" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="project_stage">
           <Key>
@@ -611,6 +805,8 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="display_order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="initiative_staffing" Relationship="KandCModel.FK_initiative_staffing_staffing" FromRole="staffing" ToRole="initiative_staffing" />
+          <NavigationProperty Name="initiative_type_staffing" Relationship="KandCModel.FK_initiative_type_staffing_staffing" FromRole="staffing" ToRole="initiative_type_staffing" />
         </EntityType>
         <EntityType Name="team_role">
           <Key>
@@ -645,6 +841,8 @@
           <Property Name="short_description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="allow_creation" Type="Boolean" Nullable="false" />
           <Property Name="display_color_class" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="initiatives" Relationship="KandCModel.FK_initiative_initiative_type" FromRole="initiative_type" ToRole="initiative" />
+          <NavigationProperty Name="initiative_type_staffing" Relationship="KandCModel.FK_initiative_type_staffing_initiative_type" FromRole="initiative_type" ToRole="initiative_type_staffing" />
         </EntityType>
         <EntityType Name="notification">
           <Key>
@@ -815,6 +1013,7 @@
           <Property Name="approver_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="approver" Relationship="KandCModel.FK_owner_approver_approver" FromRole="owner_approver" ToRole="approver" />
           <NavigationProperty Name="owner" Relationship="KandCModel.FK_owner_approver_owner" FromRole="owner_approver" ToRole="owner" />
+          <NavigationProperty Name="initiatives" Relationship="KandCModel.FK_initiative_owner_approver" FromRole="owner_approver" ToRole="initiative" />
         </EntityType>
         <EntityType Name="owner_contact">
           <Key>
@@ -834,6 +1033,7 @@
           <Property Name="department_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="department" Relationship="KandCModel.FK_owner_department_department" FromRole="owner_department" ToRole="department" />
           <NavigationProperty Name="owner" Relationship="KandCModel.FK_owner_department_owner" FromRole="owner_department" ToRole="owner" />
+          <NavigationProperty Name="initiatives" Relationship="KandCModel.FK_initiative_owner_department" FromRole="owner_department" ToRole="initiative" />
         </EntityType>
         <EntityType Name="proxy_approver">
           <Key>
@@ -892,6 +1092,7 @@
           <NavigationProperty Name="owner_department" Relationship="KandCModel.FK_owner_department_owner" FromRole="owner" ToRole="owner_department" />
           <NavigationProperty Name="owner1" Relationship="KandCModel.FK_owner_owner1" FromRole="owner" ToRole="owner1" />
           <NavigationProperty Name="owner2" Relationship="KandCModel.FK_owner_owner1" FromRole="owner1" ToRole="owner" />
+          <NavigationProperty Name="initiatives" Relationship="KandCModel.FK_initiative_owner" FromRole="owner" ToRole="initiative" />
         </EntityType>
         <Association Name="FK_owner_approver_owner">
           <End Type="KandCModel.owner" Role="owner" Multiplicity="1" />
@@ -938,6 +1139,139 @@
             </Principal>
             <Dependent Role="owner1">
               <PropertyRef Name="parent_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="initiative">
+          <Key>
+            <PropertyRef Name="initiative_id" />
+          </Key>
+          <Property Name="initiative_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="initiative_type_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="owner_id" Type="Int32" Nullable="false" />
+          <Property Name="owner_department_id" Type="Int32" Nullable="false" />
+          <Property Name="owner_approver_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="initiative_type" Relationship="KandCModel.FK_initiative_initiative_type" FromRole="initiative" ToRole="initiative_type" />
+          <NavigationProperty Name="owner" Relationship="KandCModel.FK_initiative_owner" FromRole="initiative" ToRole="owner" />
+          <NavigationProperty Name="owner_approver" Relationship="KandCModel.FK_initiative_owner_approver" FromRole="initiative" ToRole="owner_approver" />
+          <NavigationProperty Name="owner_department" Relationship="KandCModel.FK_initiative_owner_department" FromRole="initiative" ToRole="owner_department" />
+          <NavigationProperty Name="initiative_staffing" Relationship="KandCModel.FK_initiative_staffing_initiative" FromRole="initiative" ToRole="initiative_staffing" />
+        </EntityType>
+        <EntityType Name="initiative_staffing">
+          <Key>
+            <PropertyRef Name="initiative_staffing_id" />
+          </Key>
+          <Property Name="initiative_staffing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="initiative_id" Type="Int32" Nullable="false" />
+          <Property Name="staffing_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="initiative" Relationship="KandCModel.FK_initiative_staffing_initiative" FromRole="initiative_staffing" ToRole="initiative" />
+          <NavigationProperty Name="staffing" Relationship="KandCModel.FK_initiative_staffing_staffing" FromRole="initiative_staffing" ToRole="staffing" />
+        </EntityType>
+        <EntityType Name="initiative_type_staffing">
+          <Key>
+            <PropertyRef Name="initiative_type_staffing_id" />
+          </Key>
+          <Property Name="initiative_type_staffing_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="initiative_type_id" Type="Int32" Nullable="false" />
+          <Property Name="staffing_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="initiative_type" Relationship="KandCModel.FK_initiative_type_staffing_initiative_type" FromRole="initiative_type_staffing" ToRole="initiative_type" />
+          <NavigationProperty Name="staffing" Relationship="KandCModel.FK_initiative_type_staffing_staffing" FromRole="initiative_type_staffing" ToRole="staffing" />
+        </EntityType>
+        <Association Name="FK_initiative_initiative_type">
+          <End Type="KandCModel.initiative_type" Role="initiative_type" Multiplicity="1" />
+          <End Type="KandCModel.initiative" Role="initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative_type">
+              <PropertyRef Name="initiative_type_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="initiative_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_owner">
+          <End Type="KandCModel.owner" Role="owner" Multiplicity="1" />
+          <End Type="KandCModel.initiative" Role="initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner">
+              <PropertyRef Name="owner_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="owner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_owner_approver">
+          <End Type="KandCModel.owner_approver" Role="owner_approver" Multiplicity="1" />
+          <End Type="KandCModel.initiative" Role="initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner_approver">
+              <PropertyRef Name="owner_approver_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="owner_approver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_owner_department">
+          <End Type="KandCModel.owner_department" Role="owner_department" Multiplicity="1" />
+          <End Type="KandCModel.initiative" Role="initiative" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owner_department">
+              <PropertyRef Name="owner_department_id" />
+            </Principal>
+            <Dependent Role="initiative">
+              <PropertyRef Name="owner_department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_staffing_initiative">
+          <End Type="KandCModel.initiative" Role="initiative" Multiplicity="1" />
+          <End Type="KandCModel.initiative_staffing" Role="initiative_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative">
+              <PropertyRef Name="initiative_id" />
+            </Principal>
+            <Dependent Role="initiative_staffing">
+              <PropertyRef Name="initiative_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_staffing_staffing">
+          <End Type="KandCModel.staffing" Role="staffing" Multiplicity="1" />
+          <End Type="KandCModel.initiative_staffing" Role="initiative_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffing">
+              <PropertyRef Name="staffing_id" />
+            </Principal>
+            <Dependent Role="initiative_staffing">
+              <PropertyRef Name="staffing_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_type_staffing_initiative_type">
+          <End Type="KandCModel.initiative_type" Role="initiative_type" Multiplicity="1" />
+          <End Type="KandCModel.initiative_type_staffing" Role="initiative_type_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="initiative_type">
+              <PropertyRef Name="initiative_type_id" />
+            </Principal>
+            <Dependent Role="initiative_type_staffing">
+              <PropertyRef Name="initiative_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_initiative_type_staffing_staffing">
+          <End Type="KandCModel.staffing" Role="staffing" Multiplicity="1" />
+          <End Type="KandCModel.initiative_type_staffing" Role="initiative_type_staffing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staffing">
+              <PropertyRef Name="staffing_id" />
+            </Principal>
+            <Dependent Role="initiative_type_staffing">
+              <PropertyRef Name="staffing_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1187,6 +1521,37 @@
                 <ScalarProperty Name="parent_id" ColumnName="parent_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="initiatives">
+            <EntityTypeMapping TypeName="KandCModel.initiative">
+              <MappingFragment StoreEntitySet="initiative">
+                <ScalarProperty Name="owner_approver_id" ColumnName="owner_approver_id" />
+                <ScalarProperty Name="owner_department_id" ColumnName="owner_department_id" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="initiative_type_id" ColumnName="initiative_type_id" />
+                <ScalarProperty Name="initiative_id" ColumnName="initiative_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="initiative_staffing">
+            <EntityTypeMapping TypeName="KandCModel.initiative_staffing">
+              <MappingFragment StoreEntitySet="initiative_staffing">
+                <ScalarProperty Name="staffing_id" ColumnName="staffing_id" />
+                <ScalarProperty Name="initiative_id" ColumnName="initiative_id" />
+                <ScalarProperty Name="initiative_staffing_id" ColumnName="initiative_staffing_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="initiative_type_staffing">
+            <EntityTypeMapping TypeName="KandCModel.initiative_type_staffing">
+              <MappingFragment StoreEntitySet="initiative_type_staffing">
+                <ScalarProperty Name="staffing_id" ColumnName="staffing_id" />
+                <ScalarProperty Name="initiative_type_id" ColumnName="initiative_type_id" />
+                <ScalarProperty Name="initiative_type_staffing_id" ColumnName="initiative_type_staffing_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

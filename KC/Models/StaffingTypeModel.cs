@@ -27,6 +27,9 @@ namespace KC.Models
         [DataType(System.ComponentModel.DataAnnotations.DataType.Text)]
         public string description { get; set; }
 
+        [Display(Name = "For initiative of type")]
+        public List<int> forInitiatives { get; set; }
+
         public List<initiative_type> initiativeTypeOptions { get; set; }
     }
 }

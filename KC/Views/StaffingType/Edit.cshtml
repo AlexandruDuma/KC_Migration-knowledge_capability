@@ -48,6 +48,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            @Html.LabelFor(model => model.forInitiatives, new { @class = "col-form-label col-lg-3 col-sm-12" })
+                            <div class="col-lg-2 col-md-3 col-sm-12">
+                                <select class="form-control kt_selectpicker" id="forInitiatives" name="forInitiatives" multiple style="height:80px">
+                                    @foreach (var iniType in Model.initiativeTypeOptions)
+                                    {
+                                        <option value="@iniType.initiative_type_id" @(Model.forInitiatives != null && Model.forInitiatives.Contains(iniType.initiative_type_id) ? " selected" : "")>@iniType.code</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             @Html.LabelFor(model => model.name, new { @class = "col-form-label col-lg-3 col-sm-12" })
                             <div class="col-lg-4 col-md-9 col-sm-12">
                                 <input class="form-control" type="text" id="name" name="name" value="@Model.name" />
